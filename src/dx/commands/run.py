@@ -44,5 +44,6 @@ def run(image: str):
         print("\nAborted ❌")
         return
 
-    print("\nExecuting...\n")
+    print("\nExecuting Docker command...\n")
+    print("--- Docker output ---\n")
     subprocess.run(cmd, shell=True)
