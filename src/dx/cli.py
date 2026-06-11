@@ -1,9 +1,9 @@
 import typer
 
-app = typer.Typer()
+app = typer.Typer(invoke_without_command=True)
 
 
-@app.command()
-def hello():
-    """Simple test command"""
+@app.callback()
+def main():
+    """dx CLI"""
     print("dx is working ✅")
