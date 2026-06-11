@@ -9,7 +9,7 @@ def run(image: str):
     """Interactive run command"""
 
     # ---- prompts ----
-
+    print()
     port_input = input("? Expose port? (default 8080) → ").strip()
     port = port_input if port_input else "8080"
 
