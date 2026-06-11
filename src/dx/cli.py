@@ -1,5 +1,3 @@
-# src/dx/cli.py
-
 import typer
 
 from dx.commands.run import run as run_command
@@ -8,14 +6,13 @@ app = typer.Typer()
 
 
 @app.command()
-def run():
-    """Run a container (placeholder)"""
-    run_command()
+def run(image: str):
+    """Run a container (interactive learning)"""
+    run_command(image=image)
 
 
 @app.callback(invoke_without_command=True)
 def default(ctx: typer.Context):
-    """Default dx behavior"""
     if ctx.invoked_subcommand is None:
         print(
             """
