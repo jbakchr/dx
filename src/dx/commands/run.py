@@ -1,25 +1,17 @@
+# src/dx/commands/run.py
+
 import subprocess
+from dx.ui.prompt import ask_port, ask_detached, ask_name, confirm_run
+from dx.ui.output import (
+    separator,
+    show_command,
+    explain,
+    execution_header,
+    execution_done,
+)
 
 
-def separator():
-    print("\n" + "-" * 50 + "\n")
-
-
-def run(image: str):
-    """Interactive run command"""
-
-    # ---- prompts ----
-    print()
-    port_input = input("? Expose port? (default 8080) → ").strip()
-    port = port_input if port_input else "8080"
-
-    detached_input = input("? Run in background? (Y/n) → ").strip().lower()
-    detached = detached_input != "n"
-
-    name = input("? Name container? → ").strip()
-
-    # ---- build command ----
-
+def build_command(image, detached, port, name):
     parts = ["docker", "run"]
 
     if detached:
@@ -33,42 +25,38 @@ def run(image: str):
 
     parts.append(image)
 
-    cmd = " ".join(parts)
+    return " ".join(parts)
+
+
+def run(image: str):
+    """Interactive run command"""
+
+    print()
+
+    # ---- input ----
+    port = ask_port()
+    detached = ask_detached()
+    name = ask_name()
+
+    # ---- build ----
+    cmd = build_command(image, detached, port, name)
 
     # ---- output ----
-
     separator()
-    print("Generated command:\n")
-    print(cmd)
-
-    print("\nExplanation:\n")
-
-    if detached:
-        print("-d       → run in background")
-
-    if port:
-        print(f"-p       → map port {port} → 80")
-
-    if name:
-        print(f'--name   → name the container "{name}"')
-
+    show_command(cmd)
+    explain(detached, port, name)
     separator()
 
-    # ---- confirmation ----
-
-    confirm = input("Run? (Y/n) ").strip().lower()
-
-    separator()
-
-    if confirm == "n":
+    # ---- confirm ----
+    if not confirm_run():
         print("\nAborted ❌")
         return
 
-    print("Executing Docker command...\n")
-    print("--- Docker output ---\n")
+    separator()
 
+    # ---- execute ----
+    execution_header()
     subprocess.run(cmd, shell=True)
-
-    print("\n📦 Container ID shown above")
+    execution_done()
 
     separator()

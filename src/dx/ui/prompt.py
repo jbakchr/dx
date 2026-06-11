@@ -1,0 +1,19 @@
+# src/dx/ui/prompt.py
+
+def ask_port():
+    port_input = input("? Expose port? (default 8080) → ").strip()
+    return port_input if port_input else "8080"
+
+
+def ask_detached():
+    val = input("? Run in background? (Y/n) → ").strip().lower()
+    return val != "n"
+
+
+def ask_name():
+    return input("? Name container? → ").strip()
+
+
+def confirm_run():
+    val = input("Run? (Y/n) ").strip().lower()
+    return val != "n"
