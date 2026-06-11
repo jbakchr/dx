@@ -46,7 +46,8 @@ def run(image: str):
 
     print("\nExecuting Docker command...\n")
     print("--- Docker output ---\n")
-    
+
+    print(f"📦 Container ID:")    
     subprocess.run(cmd, shell=True)
 
     print("\n✅ Container started (see Docker output above)\n")
