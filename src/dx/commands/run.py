@@ -1,6 +1,10 @@
 import subprocess
 
 
+def separator():
+    print("\n" + "-" * 50 + "\n")
+
+
 def run(image: str):
     """Interactive run command"""
 
@@ -33,21 +37,38 @@ def run(image: str):
 
     # ---- output ----
 
-    print("\nGenerated command:\n")
+    separator()
+    print("Generated command:\n")
     print(cmd)
+
+    print("\nExplanation:\n")
+
+    if detached:
+        print("-d       → run in background")
+
+    if port:
+        print(f"-p       → map port {port} → 80")
+
+    if name:
+        print(f'--name   → name the container "{name}"')
+
+    separator()
 
     # ---- confirmation ----
 
-    confirm = input("\nRun? (Y/n) ").strip().lower()
+    confirm = input("Run? (Y/n) ").strip().lower()
+
+    separator()
 
     if confirm == "n":
         print("\nAborted ❌")
         return
 
-    print("\nExecuting Docker command...\n")
+    print("Executing Docker command...\n")
     print("--- Docker output ---\n")
 
-    print(f"📦 Container ID:")    
     subprocess.run(cmd, shell=True)
 
-    print("\n✅ Container started (see Docker output above)\n")
+    print("\n📦 Container ID shown above")
+
+    separator()
