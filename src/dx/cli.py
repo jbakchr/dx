@@ -1,3 +1,5 @@
+# src/dx/cli.py
+
 import typer
 
 from dx.commands.run import run as run_command
@@ -15,4 +17,17 @@ def run():
 def default(ctx: typer.Context):
     """Default dx behavior"""
     if ctx.invoked_subcommand is None:
-        print("dx is working ✅")
+        print(
+            """
+dx — Docker learning CLI
+
+Usage:
+  dx [COMMAND]
+
+Commands:
+  run     Run a container (interactive learning)
+
+Tip:
+  Use "dx --help" for more details
+"""
+        )
