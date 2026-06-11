@@ -1,9 +1,18 @@
 import typer
 
-app = typer.Typer(invoke_without_command=True)
+from dx.commands.run import run as run_command
+
+app = typer.Typer()
 
 
-@app.callback()
-def main():
-    """dx CLI"""
-    print("dx is working ✅")
+@app.command()
+def run():
+    """Run a container (placeholder)"""
+    run_command()
+
+
+@app.callback(invoke_without_command=True)
+def default(ctx: typer.Context):
+    """Default dx behavior"""
+    if ctx.invoked_subcommand is None:
+        print("dx is working ✅")
