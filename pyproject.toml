@@ -1,0 +1,16 @@
+[project]
+name = "dx"
+version = "0.1.0"
+description = "A CLI that helps you learn Docker by using it"
+authors = [{ name = "Jonas" }]
+requires-python = ">=3.10"
+dependencies = [
+    "typer[all]"
+]
+
+[project.scripts]
+dx = "dx.cli:app"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
