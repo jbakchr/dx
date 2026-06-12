@@ -11,6 +11,14 @@ from dx.ui.output import (
 )
 
 
+WEB_IMAGES = {"nginx", "httpd", "apache"}
+DB_IMAGES = {"postgres", "mysql", "mongo", "redis"}
+
+
+def get_image_name(image: str):
+    return image.split(":")[0]
+
+
 def build_command(image, detached, port, name):
     parts = ["docker", "run"]
 
@@ -34,7 +42,16 @@ def run(image: str):
     print()
 
     # ---- input ----
-    port = ask_port()
+    
+    image_name = get_image_name(image)
+
+    # conditional prompt
+    if image_name in WEB_IMAGES:
+        port = ask_port()
+    else:
+        port = None
+
+    # always ask these
     detached = ask_detached()
     name = ask_name()
 
