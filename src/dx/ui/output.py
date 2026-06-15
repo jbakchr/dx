@@ -13,16 +13,16 @@ def explain(detached, host_port, container_port, name, env_vars):
     print("\nExplanation:\n")
 
     if detached:
-        print("-d       → run in background")
+        print("-d        → run in background")
 
     if host_port and container_port:
-        print(f"-p       → map port {host_port} → {container_port}")
+        print(f"-p        → map port {host_port} → {container_port}")
 
     for key, value in env_vars.items():
-        print(f"-e {key}={value} → set environment variable")
+        print(f"-e {key}={value} → set environment variable inside container")
 
     if name:
-        print(f'--name   → name the container "{name}"')
+        print(f'--name    → name container "{name}"')
 
     print()
 
@@ -33,5 +33,5 @@ def execution_header():
 
 
 def execution_done():
-    print("\n📦 Container ID shown above")
+    print("\n📦 Container ID (from Docker output above)")
     print("\n✅ Container started (see Docker output above)")

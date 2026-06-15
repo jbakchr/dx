@@ -68,7 +68,7 @@ def run(image: str):
 
         default_container_port = profile.get("container_port", "")
         container_port_input = input(
-            f"? Container port? (default {default_container_port}) → "
+            f"? Container port (default: {default_container_port}) → "
         ).strip()
 
         container_port = (
@@ -80,7 +80,7 @@ def run(image: str):
         print("\nℹ️ Configure environment variables:\n")
 
         for key, default in profile.get("env", {}).items():
-            value = input(f"? {key}? (default {default}) → ").strip()
+            value = input(f"? {key} (default: {default}) → ").strip()
             env_vars[key] = value if value else default
 
     # always ask these
