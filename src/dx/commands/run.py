@@ -100,7 +100,7 @@ def run(image: str):
     # ---- output ----
     separator()
     show_command(cmd)
-    explain(detached, host_port, name)
+    explain(detached, host_port, container_port, name, env_vars)
     separator()
 
     # ---- confirm ----

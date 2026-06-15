@@ -9,14 +9,17 @@ def show_command(cmd: str):
     print(cmd)
 
 
-def explain(detached, port, name):
+def explain(detached, host_port, container_port, name, env_vars):
     print("\nExplanation:\n")
 
     if detached:
         print("-d       → run in background")
 
-    if port:
-        print(f"-p       → map port {port} → 80")
+    if host_port and container_port:
+        print(f"-p       → map port {host_port} → {container_port}")
+
+    for key, value in env_vars.items():
+        print(f"-e {key}={value} → set environment variable")
 
     if name:
         print(f'--name   → name the container "{name}"')
