@@ -1,11 +1,3 @@
-Perfect — this is a **great moment to solidify the vision** before writing any code.  
-I’ll give you a README that reflects _exactly_ what you’re building: not a wrapper, but a **learning tool that happens to run Docker**.
-
----
-
-# ✅ Your `README.md`
-
-````md
 # 🐳 dx
 
 > A CLI that helps you _learn Docker by using it_
@@ -45,7 +37,6 @@ Instead of writing:
 ```bash
 docker run -d -p 8080:80 --name web nginx
 ```
-````
 
 You can do:
 
