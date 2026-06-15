@@ -6,7 +6,7 @@
 
 ## 🧠 What is this?
 
-`dx` is a small, personal CLI that sits on top of Docker.
+`dx` is a small CLI that sits on top of Docker.
 
 But unlike most wrappers, it does **not try to hide Docker**.
 
@@ -20,13 +20,13 @@ Instead, it helps you:
 
 ## 🎯 The goal
 
-Most Docker tools do this:
+Most tools do this:
 
 > Hide complexity
 
 `dx` does something else:
 
-> Reveal complexity — but in small, manageable steps
+> Reveal complexity — step by step
 
 ---
 
@@ -44,47 +44,43 @@ You can do:
 dx run nginx
 ```
 
-And get:
+And get an interactive flow:
 
 ```
-? Expose port? (default 8080) → 3000
-? Run in background? (Y/n) → Y
+? Expose port? (default 8080) →
+? Container port? (default 80) →
+? Run in background? (Y/n) →
 ? Name container? → web
+
+--------------------------------------------------
 
 Generated command:
 
-docker run -d -p 3000:80 --name web nginx
+docker run -d -p 8080:80 --name web nginx
 
-Run? (Y/n)
+Explanation:
+
+-d        → run in background
+-p        → map port 8080 → 80
+--name    → name container "web"
+
+--------------------------------------------------
 ```
 
 ---
 
-## 🧠 Why this exists
+## 🧠 What makes dx different
 
-When learning Docker, the hardest part is not _what Docker is_ —  
-it's remembering:
+Most Docker tools:
 
-- command syntax
-- flags (`-d`, `-p`, `--name`)
-- argument order
-- when and why to use what
+- hide the underlying command
+- optimize for speed
 
-For example:
+`dx` is different:
 
-```bash
-docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-```
-
-This structure is powerful but hard to internalize at first [\[forums.docker.com\]](https://forums.docker.com/t/command-line-documentation-where-is-the-order-of-flags-arguments-specified/119438)
-
----
-
-### `dx` helps by:
-
-- breaking commands into **small decisions**
-- showing you the **final Docker command**
-- reinforcing patterns through repetition
+- always shows the real command ✅
+- explains the flags ✅
+- adapts prompts based on the image ✅
 
 ---
 
@@ -92,38 +88,105 @@ This structure is powerful but hard to internalize at first [\[forums.docker.com
 
 Every time you use `dx`:
 
-1. You answer a few simple prompts
-2. A real `docker` command is generated
-3. You see exactly how it is constructed
+1. You answer simple prompts
+2. A real Docker command is generated
+3. You see how it is constructed
 4. You run it
 5. Repeat
 
-Over time, you stop needing `dx`
+👉 Over time, you stop needing `dx`
 
 ---
 
-## 🧩 Two modes
+## 🧩 Current features
 
-### ✅ 1. Do (use Docker)
+### ✅ `dx run <image>`
 
-```bash
-dx run nginx
-dx ps
-dx logs web
-```
-
-→ helps you _do things quickly_
+Interactive Docker runner.
 
 ---
 
-### ✅ 2. Learn (understand Docker)
+### 🧠 Image-aware prompts
 
-```bash
-dx learn run
-dx explain "docker run -d -p 8080:80 nginx"
+`dx` adapts to the image you're running:
+
+#### nginx (web)
+
+```
+- asks for port mapping
+- asks for container port (default 80)
 ```
 
-→ helps you _understand what’s happening_
+#### postgres (database)
+
+```
+- asks for environment variables (e.g. password)
+```
+
+Example:
+
+```
+dx run postgres
+
+ℹ️ Configure environment variables:
+
+? POSTGRES_PASSWORD (default: password) →
+
+? Run in background? (Y/n) →
+? Name container? → db
+
+--------------------------------------------------
+
+Generated command:
+
+docker run -d -e POSTGRES_PASSWORD=password --name db postgres
+
+Explanation:
+
+-d        → run in background
+-e POSTGRES_PASSWORD=password → set environment variable inside container
+--name    → name container "db"
+```
+
+---
+
+### ✅ Explanation layer
+
+After generating a command, `dx` explains:
+
+- what each flag does
+- why it is used
+
+---
+
+### ✅ Real Docker execution
+
+`dx` does NOT simulate execution.
+
+It runs the real Docker command and shows real output:
+
+```
+--- Docker output ---
+<actual docker logs / container id>
+```
+
+---
+
+## 🧠 Why this exists
+
+Learning Docker is hard not because of concepts, but because of:
+
+- remembering syntax
+- remembering flags
+- remembering combinations
+
+Example:
+
+```bash
+docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+```
+
+👉 Simple, but difficult to internalize.
 
 ---
 
@@ -131,16 +194,23 @@ dx explain "docker run -d -p 8080:80 nginx"
 
 This is not:
 
-- a full Docker replacement
-- a feature-complete CLI
-- a production-grade tool
+- a Docker replacement
+- a production tool
+- a full abstraction
 
 This is:
 
-> A tool designed to help one person (me) go from  
-> “I copy Docker commands from Google”  
-> → to  
-> “I understand and write them myself”
+> A tool designed to help one person go from
+
+```
+"I copy Docker commands from Google"
+```
+
+to:
+
+```
+"I understand and write them myself"
+```
 
 ---
 
@@ -159,22 +229,59 @@ Because:
 
 ---
 
-## 🚀 Initial scope (very small)
+## 🏗️ Architecture (simple by design)
 
-The first version will only focus on:
+```
+src/dx/
+├── cli.py             # Typer CLI entrypoint
+├── commands/
+│   └── run.py        # run command (orchestrator)
+├── ui/
+│   ├── prompt.py     # input handling
+│   └── output.py     # display / formatting
+├── config/
+│   └── images.py     # image-specific profiles
+```
 
-- `dx run` → interactive container runner
-- `dx explain` → explain Docker commands
-- `dx learn run` → quick patterns for `docker run`
+---
+
+## 🔧 Image profiles (core concept)
+
+`dx` uses small profiles to define:
+
+- default container ports
+- required environment variables
+- which prompts to show
+
+Example:
+
+```python
+IMAGE_PROFILES = {
+    "nginx": {
+        "container_port": 80,
+        "prompts": ["port", "container_port"],
+    },
+    "postgres": {
+        "container_port": 5432,
+        "prompts": ["env"],
+        "env": {
+            "POSTGRES_PASSWORD": "password",
+        },
+    },
+}
+```
 
 ---
 
 ## 🔮 Future ideas
 
-- smarter prompts (volumes, env vars, networks)
-- dry-run mode (show without executing)
-- progressive learning steps
-- personal command patterns ("recipes")
+- more image profiles (redis, node, python)
+- volumes & file mounts
+- smarter explanations ("why this matters")
+- `dx explain` command
+- `dx learn` command
+- dry-run mode
+- reusable "recipes"
 
 ---
 
@@ -198,5 +305,4 @@ It is trying to make this transition easier:
 
 Docker must already be installed.
 
-`dx` simply wraps and calls the existing Docker CLI,  
-which provides the actual container functionality [\[bing.com\]](https://bing.com/search?q=what+is+docker+CLI+wrapper+simple+explanation)
+`dx` simply wraps and calls the existing Docker CLI.
