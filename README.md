@@ -306,3 +306,7 @@ It is trying to make this transition easier:
 Docker must already be installed.
 
 `dx` simply wraps and calls the existing Docker CLI.
+
+## 📄 License
+
+MIT
