@@ -11,9 +11,6 @@ from dx.commands.run_exec import execute
 
 from dx.config.images import IMAGE_PROFILES
 
-WEB_IMAGES = {"nginx", "httpd", "apache"}
-DB_IMAGES = {"postgres", "mysql", "mongo", "redis"}
-
 
 def get_image_name(image: str):
     return image.split(":")[0]
