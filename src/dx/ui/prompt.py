@@ -1,8 +1,8 @@
 # src/dx/ui/prompt.py
 
-def ask_port():
-    port_input = input("? Expose port? (default 8080) → ").strip()
-    return port_input if port_input else "8080"
+def ask_port(default: str):
+    port = input(f"? Expose port? (default {default}) → ").strip()
+    return port if port else default
 
 
 def ask_detached():
