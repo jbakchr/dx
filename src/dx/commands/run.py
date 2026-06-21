@@ -1,17 +1,15 @@
 # src/dx/commands/run.py
 
-import subprocess
-from dx.ui.prompt import ask_port, ask_detached, ask_name, confirm_run
+from dx.ui.prompt import ask_detached, ask_name, confirm_run
 from dx.ui.output import (
     separator,
     show_command,
     explain,
-    execution_header,
-    execution_done,
 )
+from dx.commands.run_prompts import collect_inputs
+from dx.commands.run_exec import execute
 
 from dx.config.images import IMAGE_PROFILES
-
 
 WEB_IMAGES = {"nginx", "httpd", "apache"}
 DB_IMAGES = {"postgres", "mysql", "mongo", "redis"}
@@ -57,31 +55,7 @@ def run(image: str):
     profile = get_profile(image_name)
 
     # ---- prompts ----
-
-    host_port = None
-    container_port = None
-    env_vars = {}
-
-    # PORT handling (nginx case)
-    if "port" in profile.get("prompts", []):
-        host_port = ask_port()
-
-        default_container_port = profile.get("container_port", "")
-        container_port_input = input(
-            f"? Container port (default: {default_container_port}) → "
-        ).strip()
-
-        container_port = (
-            container_port_input if container_port_input else str(default_container_port)
-        )
-
-    # ENV handling (postgres case)
-    if "env" in profile.get("prompts", []):
-        print("\nℹ️ Configure environment variables:\n")
-
-        for key, default in profile.get("env", {}).items():
-            value = input(f"? {key} (default: {default}) → ").strip()
-            env_vars[key] = value if value else default
+    host_port, container_port, env_vars = collect_inputs(profile)
 
     # always ask these
     detached = ask_detached()
@@ -111,8 +85,4 @@ def run(image: str):
     separator()
 
     # ---- execute ----
-    execution_header()
-    subprocess.run(cmd, shell=True)
-    execution_done()
-
-    separator()
+    execute(cmd)
