@@ -1,11 +1,7 @@
 # src/dx/commands/run.py
 
 from dx.ui.prompt import ask_detached, ask_name, confirm_run
-from dx.ui.output import (
-    separator,
-    show_command,
-    explain,
-)
+from dx.ui.output import separator, show_command, explain
 from dx.commands.run_prompts import collect_inputs
 from dx.commands.run_exec import execute
 
