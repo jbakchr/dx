@@ -28,4 +28,7 @@ IMAGE_PROFILES = {
     "node": {
         "prompts": ["volume"],
     },
+    "python": {
+        "prompts": ["volume", "command"],
+    },
 }

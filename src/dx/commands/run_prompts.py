@@ -40,11 +40,20 @@ def handle_volume():
     return "$(pwd):/app"
 
 
+def handle_command():
+    cmd = input("? Python file to run (leave empty to skip) → ").strip()
+
+    if not cmd:
+        return None
+
+    return f"python {cmd}"
+
 def collect_inputs(profile):
     host_port = None
     container_port = None
     env_vars = {}
     volume = None
+    command = None
 
     prompts = profile.get("prompts", [])
 
@@ -57,4 +66,7 @@ def collect_inputs(profile):
     if "volume" in prompts:
         volume = handle_volume()
 
-    return host_port, container_port, env_vars, volume
+    if "command" in prompts:
+        command = handle_command()
+
+    return host_port, container_port, env_vars, volume, command
