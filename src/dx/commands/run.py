@@ -76,7 +76,7 @@ def run(image: str):
     # ---- output ----
     separator()
     show_command(cmd)
-    explain(detached, host_port, container_port, name, env_vars)
+    explain(detached, host_port, container_port, name, env_vars, volume)
     separator()
 
     # ---- confirm ----

@@ -9,7 +9,7 @@ def show_command(cmd: str):
     print(cmd)
 
 
-def explain(detached, host_port, container_port, name, env_vars):
+def explain(detached, host_port, container_port, name, env_vars, volume):
     print("\nExplanation:\n")
 
     if detached:
@@ -23,6 +23,10 @@ def explain(detached, host_port, container_port, name, env_vars):
 
     if name:
         print(f'--name    → name container "{name}"')
+    
+    if volume:
+        print("-v        → mount current directory into container")
+        print("-w        → set working directory inside container")
 
     print()
 
