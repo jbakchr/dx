@@ -1,7 +1,7 @@
-## 🐳 dx — Roadmap
+# 🐳 dx — Roadmap
 
-> Build dx slowly.  
-> Each step should be small, useful, and testable.
+Build dx slowly.  
+Each step should be small, useful, and testable.
 
 ---
 
@@ -10,129 +10,125 @@
 - Keep things minimal
 - Build only what is needed right now
 - Always prefer working software over ideas
-- Each phase should feel like:  
+- Each phase should feel like:
   → "Ahh… this is already useful"
 
 ---
 
-## ✅ CURRENT STATE (Milestone reached)
+## ✅ CURRENT STATE (IMPORTANT)
 
-dx now has:
+dx is now a **learning-first Docker CLI** with a complete basic feature set.
 
-- ✅ Installable Typer CLI
+### ✅ Core capabilities
+
+- ✅ Installable CLI (`pip install -e .`)
 - ✅ `dx run <image>`
 - ✅ Interactive prompts
 - ✅ Real Docker execution
 - ✅ Command generation + explanation
 - ✅ Image-aware behavior via `IMAGE_PROFILES`
-- ✅ Basic support for:
-  - nginx (ports)
-  - postgres (env variables)
-
-👉 This is the **first real version of dx as a learning tool**
 
 ---
 
-## ⚡ Phase 0 — Setup ✅ DONE
+### ✅ Supported concepts (learning model)
 
-Goal:
-→ Have a runnable CLI
+dx now covers the **core mental model of `docker run`:**
 
----
+- ✅ `-p` → ports
+- ✅ `-e` → environment variables
+- ✅ `-v` → volumes
+- ✅ `-w` → working directory
+- ✅ command execution (e.g. `python app.py`)
 
-## ⚡ Phase 1 — Basic run command ✅ DONE
-
-Goal:
-→ Introduce Docker command execution
-
----
-
-## ⚡ Phase 2 — Interactive run ✅ DONE
-
-Goal:
-→ Build commands step-by-step
+👉 This is a major milestone:
+dx now teaches **how Docker actually works**
 
 ---
 
-## ⚡ Phase 3 — Explanation layer ✅ DONE
+### ✅ Supported images
 
-Goal:
-→ Show meaning of flags
+#### 🌐 Web
 
----
+- nginx (port + container port)
 
-## ⚡ Phase 4 — Image-aware prompts ✅ DONE (NEW CORE)
+#### 🗄️ Databases
 
-Goal:
-→ Adapt prompts based on image
+- postgres (port + env)
+- mysql (port + env)
+- redis (port)
 
-### ✅ Implemented
+#### 💻 Development
 
-- Introduced `IMAGE_PROFILES`
-- nginx → port + container port
-- postgres → environment variables
-
-### 🧠 Insight
-
-This is the core of dx:
-→ guided, context-aware Docker learning
+- node (volume)
+- python (volume + command)
 
 ---
 
-## ⚡ Next Phase — Expand image profiles (HIGH VALUE)
+### ✅ Internal structure (refactored)
 
-Goal:
-→ Cover more real-world use cases
+- ✅ `run.py` → orchestration
+- ✅ `run_prompts.py` → prompt logic
+- ✅ `run_exec.py` → execution
+- ✅ `ui/` → input/output separation
+- ✅ `config/images.py` → behavior via profiles
 
-### Steps
+👉 Code is now clean, composable, and aligned with the learning model
 
-- [ ] Add `redis`
-  - no env
-  - default port 6379
+---
 
-- [ ] Add `mysql`
-  - MYSQL_ROOT_PASSWORD
-  - port 3306
+## 🧠 Key insight (where dx is now)
 
-- [ ] Add `node`
-  - optional volume mount
-
-- [ ] Add `python`
-  - optional script execution
-
-Success =
+dx has evolved from:
 
 ```
 
-dx run redis
-dx run mysql
-dx run node
+command generator
 
 ```
 
-feel natural and useful
+to:
+
+```
+
+guided Docker learning system
+
+```
+
+The core loop is now:
+
+```
+
+input → prompts → command → explanation → execution → learning
+
+```
 
 ---
 
-## ⚡ Phase — Improve explanations (learning depth)
+## ⚡ Next Phase — Improve explanations (HIGH VALUE)
 
 Goal:
 → Move from “what” → “why”
 
 ### Steps
 
-- [ ] Improve `-p` explanation  
-      → “makes service доступable via host port”
+- Improve `-p` explanation  
+  → “so you can access the service from your browser”
 
-- [ ] Improve `-e` explanation  
-      → show purpose of env vars
+- Improve `-v` explanation  
+  → “so your local files are available inside the container”
 
-- [ ] Optionally add short hints
+- Improve `-w` explanation  
+  → “so commands run in the correct directory”
 
-Success =
+- Keep explanations:
+  - short
+  - practical
+  - non-verbose
 
-User not only sees the command  
-→ but understands _why it matters_
+### Success
+
+User not only sees commands  
+→ but understands why each part matters
 
 ---
 
@@ -143,7 +139,7 @@ Goal:
 
 ### Steps
 
-- [ ] Add:
+- Add:
 
 ```
 
@@ -151,22 +147,24 @@ dx run nginx --dry-run
 
 ```
 
-- [ ] Skip Docker execution
+- Skip actual Docker execution
 
-Success =
+### Success
 
-User can experiment safely
+- User can experiment safely
+- Faster learning loop
 
 ---
 
-## ⚡ Phase — `dx explain`
+## ⚡ Phase — dx explain
 
 Goal:
-→ Explain existing commands
+
+→ Explain existing Docker commands
 
 ### Steps
 
-- [ ] Add:
+- Add:
 
 ```
 
@@ -174,22 +172,23 @@ dx explain "docker run -d -p 8080:80 nginx"
 
 ```
 
-- [ ] Reuse existing explanation logic
+- Reuse existing explanation logic
 
-Success =
+### Success
 
-dx helps even without generating commands
+dx becomes useful even without generating commands
 
 ---
 
-## ⚡ Phase — `dx learn run`
+## ⚡ Phase — dx learn
 
 Goal:
-→ Build mental model of commands
 
-### Steps
+→ Strengthen pattern recognition
 
-- [ ] Show progression:
+### Idea
+
+Show progressive examples:
 
 ```
 
@@ -200,76 +199,65 @@ docker run --name web nginx
 
 ```
 
-Success =
+### Success
 
-User sees patterns clearly
+User starts recognizing patterns naturally
 
 ---
 
-## ⚡ Phase — Prompt improvements
+## ⚡ Phase — Prompt UX improvements
 
 Goal:
-→ Better UX without adding complexity
+
+→ Improve flow without adding complexity
 
 ### Steps
 
-- [ ] Improve wording
-- [ ] Improve ordering consistency
-- [ ] Reduce friction
+- Slightly improve wording
+- Make prompt order consistent
+- Reduce unnecessary prompts
 
-Success =
+### Rule
 
-dx feels fast and intuitive
-
----
-
-## ⚡ Phase — Refactor (lightweight)
-
-Goal:
-→ Keep code clean as complexity grows
-
-### Steps
-
-- [ ] Keep separation:
-  - commands/
-  - ui/
-  - config/
-
-- [ ] Avoid duplication
-- [ ] Keep functions small
-
-Success =
-
-Code remains simple and readable
+If a prompt adds friction → remove or simplify it
 
 ---
 
-## ⚡ Phase — Personal patterns
+## ⚡ Phase — Personal workflow patterns
 
 Goal:
-→ Match your real workflow
+
+→ Reflect real usage patterns
 
 ### Ideas
 
-- [ ] auto `--rm` for temporary runs
-- [ ] common container presets
-- [ ] project-specific defaults
+- auto `--rm` for temporary runs
+- common presets (e.g. quick nginx)
+- small defaults for dev workflows
 
-Success =
+### Success
 
-dx reflects how _you_ actually use Docker
+dx feels like a natural extension of how you actually use Docker
 
 ---
 
-## 🔮 Later (optional)
+## ⚠️ Things to AVOID (very important)
 
-Only after everything above works:
+- ❌ Do NOT turn dx into a Docker abstraction layer
+- ❌ Do NOT try to support all Docker features
+- ❌ Do NOT introduce complex config systems
+- ❌ Do NOT hide real Docker commands
 
-- smarter image detection
-- volumes & mounts
-- docker-compose support
-- templates ("run a database")
-- shareable command recipes
+👉 Simplicity is the product
+
+---
+
+## 🔮 Later (only if still simple)
+
+- Better command explanations
+- Small learning modes
+- Volumes/mount edge cases
+- Very small “recipes”
 
 ---
 
@@ -287,14 +275,22 @@ If something feels:
 
 ## 🏁 Definition of success
 
-You gradually move from:
+You move from:
 
 ```
 
-"I don't remember docker commands"
+"I copy Docker commands"
+
 ↓
+
 "I recognize patterns"
+
 ↓
-"I don't need dx anymore"
+
+"I understand what I am doing"
+
+↓
+
+"I don’t need dx anymore"
 
 ```
