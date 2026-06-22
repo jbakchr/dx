@@ -1,5 +1,3 @@
-# src/dx/config/images.py
-
 IMAGE_PROFILES = {
     "nginx": {
         "container_port": 80,
@@ -15,5 +13,12 @@ IMAGE_PROFILES = {
     "redis": {
         "container_port": 6379,
         "prompts": ["port"],
+    },
+    "mysql": {
+        "container_port": 3306,
+        "prompts": ["port", "env"],
+        "env": {
+            "MYSQL_ROOT_PASSWORD": "password",
+        },
     },
 }
