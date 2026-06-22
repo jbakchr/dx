@@ -30,7 +30,7 @@ Instead, it helps you:
 
 ```
 
-git clone https://github.com//dx.git
+git clone https://github.com/dx.git
 cd dx
 
 ```
