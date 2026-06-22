@@ -83,10 +83,10 @@ dx run python
 ## 🎯 The goal
 
 Most tools do this:  
-→ Hide complexity
+_→ Hide complexity_
 
-dx does something else:  
-→ Reveal complexity — step by step
+`dx` does something else:  
+_→ Reveal complexity — step by step_
 
 ---
 
@@ -137,7 +137,7 @@ Explanation:
 
 ## 🔁 The learning loop
 
-Every time you use dx:
+Every time you use `dx`:
 
 - You answer simple prompts
 - A real Docker command is generated
@@ -145,11 +145,11 @@ Every time you use dx:
 - You run it
 - You observe the result
 
-👉 Over time, you stop needing dx
+👉 Over time, you stop needing `dx`
 
 ---
 
-## 🔁 How dx works (at a glance)
+## 🔁 How `dx` works (at a glance)
 
 ```
 
@@ -262,7 +262,7 @@ Explanation:
 
 ### ✅ Explanation layer
 
-After generating a command, dx explains:
+After generating a command, `dx` explains:
 
 - `-d` → run in background
 - `-p` → map ports
@@ -359,7 +359,7 @@ src/
 
 ## 🔧 Image profiles (core concept)
 
-dx uses small profiles to define behavior:
+`dx` uses small profiles to define behavior:
 
 ```python
 IMAGE_PROFILES = {
@@ -412,7 +412,7 @@ docker run [OPTIONS] IMAGE [COMMAND]
 
 ## 🧠 Summary
 
-dx is not trying to replace Docker.
+`dx` is not trying to replace Docker.
 
 It is trying to make this transition easier:
 
@@ -429,7 +429,7 @@ It is trying to make this transition easier:
 ## ⚠️ Note
 
 Docker must already be installed.  
-dx simply calls the Docker CLI.
+`dx` simply calls the Docker CLI.
 
 ---
 
