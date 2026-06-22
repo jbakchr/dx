@@ -1,8 +1,14 @@
+from dx.ui.prompt import ask_port
+
+
 def handle_port(profile):
     from dx.ui.prompt import ask_port
 
-    default = str(profile.get("container_port", "8080"))
-    host_port = ask_port(default)
+    default_host = str(
+        profile.get("default_host_port")
+        or profile.get("container_port", "8080")
+    )
+    host_port = ask_port(default_host)
 
     if "container_port" in profile.get("prompts", []):
         default = profile.get("container_port", "")
