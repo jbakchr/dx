@@ -30,10 +30,21 @@ def handle_env(profile):
     return env_vars
 
 
+
+def handle_volume():
+    choice = input("? Mount current directory? (Y/n) → ").strip().lower()
+
+    if choice == "n":
+        return None
+
+    return "$(pwd):/app"
+
+
 def collect_inputs(profile):
     host_port = None
     container_port = None
     env_vars = {}
+    volume = None
 
     prompts = profile.get("prompts", [])
 
@@ -43,4 +54,7 @@ def collect_inputs(profile):
     if "env" in prompts:
         env_vars = handle_env(profile)
 
-    return host_port, container_port, env_vars
+    if "volume" in prompts:
+        volume = handle_volume()
+
+    return host_port, container_port, env_vars, volume

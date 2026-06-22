@@ -25,4 +25,7 @@ IMAGE_PROFILES = {
             "MYSQL_ROOT_PASSWORD": "password",
         },
     },
+    "node": {
+        "prompts": ["volume"],
+    },
 }
