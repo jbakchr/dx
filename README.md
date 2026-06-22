@@ -149,6 +149,34 @@ Every time you use dx:
 
 ---
 
+## 🔁 How dx works (at a glance)
+
+```
+
+input → guided prompts → docker command → explanation → execution → learning
+
+```
+
+Example:
+
+```
+
+dx run nginx
+    ↓
+answer prompts
+    ↓
+see generated command
+    ↓
+understand flags
+    ↓
+run real Docker
+    ↓
+repeat → build intuition
+
+```
+
+---
+
 ## 🧩 Current features
 
 ### ✅ `dx run <image>`
