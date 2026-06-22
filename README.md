@@ -6,7 +6,7 @@ A CLI that helps you _learn Docker by using it_
 
 ## 🧠 What is this?
 
-dx is a small CLI that sits on top of Docker.  
+`dx` is a small CLI that sits on top of Docker.  
 But unlike most tools, it does **not try to hide Docker**.
 
 Instead, it helps you:
@@ -187,7 +187,7 @@ Interactive Docker runner.
 
 ### 🧠 Image-aware prompts (core concept)
 
-dx adapts prompts based on the image you run.
+`dx` adapts prompts based on the image you run.
 
 ---
 
@@ -275,7 +275,7 @@ After generating a command, `dx` explains:
 
 ### ✅ Real Docker execution
 
-dx does NOT simulate anything.
+`dx` does NOT simulate anything.
 
 It runs the real Docker command and shows real output:
 
