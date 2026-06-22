@@ -6,7 +6,8 @@ IMAGE_PROFILES = {
     },
     "postgres": {
         "container_port": 5432,
-        "prompts": ["env"],
+        "default_host_port": 5432,
+        "prompts": ["port", "env"],
         "env": {
             "POSTGRES_PASSWORD": "password",
         },
