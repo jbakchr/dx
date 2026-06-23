@@ -6,7 +6,7 @@ A CLI that helps you _learn Docker by using it_
 
 ## 🧠 What is this?
 
-`dx` is a small CLI that sits on top of Docker.  
+dx is a small CLI that sits on top of Docker.  
 But unlike most tools, it does **not try to hide Docker**.
 
 Instead, it helps you:
@@ -19,74 +19,52 @@ Instead, it helps you:
 
 ## 🔧 Installation
 
-### Requirements
+## Requirements
 
 - Python 3.10+
 - Docker installed and working
 
----
+## 1. Clone the repository
 
-### 1. Clone the repository
-
-```
-
-git clone https://github.com/dx.git
+git clone https://github.com/dx.git  
 cd dx
 
-```
-
----
-
-### 2. Install locally (editable mode)
-
-```
+## 2. Install locally (editable mode)
 
 pip install -e .
 
-```
-
-This installs `dx` as a CLI command on your system.
-
----
-
-### 3. Verify installation
-
-```
+## 3. Verify installation
 
 dx --help
 
-```
-
-If everything works, you should see the CLI help output.
-
 ---
 
-### ✅ Try it
+## ✅ Try it
 
-```
-
-dx run nginx
-dx run redis
+dx run nginx  
+dx run redis  
 dx run python
 
-```
+To see supported images:
+
+dx supported
 
 ---
 
-### ⚠️ Notes
+## ⚠️ Notes
 
 - Docker must already be installed and running
-- `dx` simply calls the Docker CLI
+- dx simply calls the Docker CLI
 
 ---
 
 ## 🎯 The goal
 
 Most tools do this:  
-_→ Hide complexity_
+→ Hide complexity
 
-`dx` does something else:  
-_→ Reveal complexity — step by step_
+dx does something else:  
+→ Reveal complexity — step by step
 
 ---
 
@@ -94,30 +72,20 @@ _→ Reveal complexity — step by step_
 
 Instead of writing:
 
-```
-
 docker run -d -p 8080:80 --name web nginx
-
-```
 
 You can do:
 
-```
-
 dx run nginx
-
-```
 
 And get a guided flow:
 
-```
-
-? Expose port? (default 8080) →
-? Container port? (default 80) →
-? Run in background? (Y/n) →
+? Expose port? (default 8080) →  
+? Container port? (default 80) →  
+? Run in background? (Y/n) →  
 ? Name container? → web
 
-***
+---
 
 Generated command:
 
@@ -125,125 +93,107 @@ docker run -d -p 8080:80 --name web nginx
 
 Explanation:
 
--d        → run in background
--p        → map port 8080 → 80
-\--name    → name container "web"
-
-***
-
-```
+-d → run in background (so your terminal stays free)  
+-p → map port 8080 → 80 (so you can access the service from your machine)  
+--name → name container "web" (so you can reference it later)
 
 ---
 
 ## 🔁 The learning loop
 
-Every time you use `dx`:
+Every time you use dx:
 
 - You answer simple prompts
 - A real Docker command is generated
 - You see how it is constructed
+- You understand what each flag does
 - You run it
 - You observe the result
 
-👉 Over time, you stop needing `dx`
+👉 Over time, you stop needing dx
 
 ---
 
-## 🔁 How `dx` works (at a glance)
+## 🔁 How dx works (at a glance)
+
+input → guided prompts → command → explanation → execution → learning
+
+---
+
+## ✅ Commands
+
+## 🔹 dx run <image>
+
+Run a container with guided prompts.
+
+If you try an unsupported image:
 
 ```
 
-input → guided prompts → docker command → explanation → execution → learning
+dx run foo
 
-```
+Unknown image: foo
 
-Example:
-
-```
-
-dx run nginx
-    ↓
-answer prompts
-    ↓
-see generated command
-    ↓
-understand flags
-    ↓
-run real Docker
-    ↓
-repeat → build intuition
+Tip: run `dx supported` to see available images
 
 ```
 
 ---
 
-## 🧩 Current features
+## 🔹 dx supported
 
-### ✅ `dx run <image>`
-
-Interactive Docker runner.
-
----
-
-### 🧠 Image-aware prompts (core concept)
-
-`dx` adapts prompts based on the image you run.
-
----
-
-### ✅ Supported images
-
-#### 🌐 Web
-
-**nginx**
-
-- port mapping (default: 8080 → 80)
-
----
-
-#### 🗄️ Databases
-
-**postgres**
-
-- port mapping (5432)
-- environment variables
-
-**mysql**
-
-- port mapping (3306)
-- environment variables
-
-**redis**
-
-- port mapping (6379)
-
----
-
-#### 💻 Development containers
-
-**node**
-
-- optional volume mount (`-v`)
-- working directory (`-w`)
-
-**python**
-
-- optional volume mount (`-v`)
-- working directory (`-w`)
-- optional command (run a script)
-
-Example:
+Show images supported by dx:
 
 ```
+
+Supported images:
+
+nginx     → web server (ports)
+postgres  → database (ports + env)
+mysql     → database (ports + env)
+redis     → cache (ports)
+node      → development (volume)
+python    → development (volume + command)
+
+```
+
+---
+
+## 🧩 Supported concepts
+
+dx teaches the core parts of `docker run`:
+
+- -d → run in background
+- -p → map ports
+- -e → environment variables
+- -v → mount files into container
+- -w → working directory
+- command execution (e.g. python app.py)
+
+---
+
+## 🧠 Image-aware prompts (core concept)
+
+dx adapts behavior based on the image.
+
+Examples:
+
+- nginx → ports
+- postgres → ports + environment variables
+- python → volume + command
+
+---
+
+## ✅ Example: python
 
 dx run python
 
-? Mount current directory? (Y/n) →
-? Python file to run (leave empty to skip) → app.py
-? Run in background? (Y/n) →
+? Mount current directory? (Y/n) →  
+? Python file to run (leave empty to skip) → app.py  
+? Run in background? (Y/n) →  
 ? Name container? →
 
-***
+---
 
 Generated command:
 
@@ -251,40 +201,18 @@ docker run -v $(pwd):/app -w /app python python app.py
 
 Explanation:
 
--v        → mount current directory into container
--w        → set working directory inside container
-
-***
-
-```
+-v → mount current directory (so your local files are available inside the container)  
+-w → set working directory (so commands run in the correct folder)
 
 ---
 
-### ✅ Explanation layer
+## ✅ Real Docker execution
 
-After generating a command, `dx` explains:
-
-- `-d` → run in background
-- `-p` → map ports
-- `-e` → set environment variables
-- `-v` → mount files into container
-- `-w` → set working directory
-- `--name` → name the container
-
----
-
-### ✅ Real Docker execution
-
-`dx` does NOT simulate anything.
-
+dx does NOT simulate anything.  
 It runs the real Docker command and shows real output:
 
-```
-
-\--- Docker output ---
-\<container id / logs>
-
-```
+--- Docker output ---  
+<container id / logs>
 
 ---
 
@@ -292,15 +220,10 @@ It runs the real Docker command and shows real output:
 
 Always show:
 
-```
-
 docker run ...
 
-```
-
-Because:
-
-> If you don’t see the real command, you don’t learn it.
+Because:  
+If you don’t see the real command, you don’t learn it.
 
 ---
 
@@ -314,81 +237,37 @@ This is NOT:
 
 This IS:
 
-> A learning-first CLI
+✅ A learning-first CLI
 
 Designed to take you from:
 
-```
-
-"I copy commands from Google"
-
-```
-
-to:
-
-```
-
-"I understand and write them myself"
-
-```
+"I copy Docker commands"  
+↓  
+"I recognize parts of them"  
+↓  
+"I understand what I’m doing"  
+↓  
+"I can write them myself"
 
 ---
 
 ## 🏗️ Architecture (simple by design)
 
-```
+src/  
+└── dx/  
+ ├── cli.py  
+ ├── commands/  
+ │ ├── run.py  
+ │ ├── run_exec.py  
+ │ ├── run_prompts.py  
+ │ └── supported.py  
+ ├── config/  
+ │ └── images.py  
+ └── ui/  
+ ├── output.py  
+ └── prompt.py
 
-src/
-└── dx/
-    ├── __init__.py
-    ├── cli.py
-    ├── commands/
-    │   ├── __init__.py
-    │   ├── run.py           # orchestration
-    │   ├── run_exec.py      # execution layer
-    │   └── run_prompts.py   # prompt handling
-    ├── config/
-    │   └── images.py        # image profiles
-    └── ui/
-        ├── output.py        # display + explanations
-        └── prompt.py        # basic prompts
-
-```
-
----
-
-## 🔧 Image profiles (core concept)
-
-`dx` uses small profiles to define behavior:
-
-```python
-IMAGE_PROFILES = {
-    "nginx": {
-        "container_port": 80,
-        "default_host_port": 8080,
-        "prompts": ["port", "container_port"],
-    },
-
-    "postgres": {
-        "container_port": 5432,
-        "default_host_port": 5432,
-        "prompts": ["port", "env"],
-        "env": {
-            "POSTGRES_PASSWORD": "password",
-        },
-    },
-
-    "node": {
-        "prompts": ["volume"],
-    },
-
-    "python": {
-        "prompts": ["volume", "command"],
-    },
-}
-```
-
-👉 Behavior is driven by data — not hardcoded logic.
+👉 Behavior is driven by data — not hardcoded logic
 
 ---
 
@@ -402,34 +281,29 @@ Learning Docker is hard not because of concepts, but because of:
 
 Example:
 
-```
 docker run [OPTIONS] IMAGE [COMMAND]
-```
 
-👉 Simple, but hard to internalize.
+👉 Simple, but hard to internalize
 
 ---
 
 ## 🧠 Summary
 
-`dx` is not trying to replace Docker.
-
+dx is not trying to replace Docker.  
 It is trying to make this transition easier:
 
-```
-"I don’t understand this command"
-        ↓
-"I recognize parts of it"
-        ↓
+"I don’t understand this command"  
+↓  
+"I recognize parts of it"  
+↓  
 "I can write it myself"
-```
 
 ---
 
 ## ⚠️ Note
 
 Docker must already be installed.  
-`dx` simply calls the Docker CLI.
+dx simply calls the Docker CLI.
 
 ---
 
