@@ -1,11 +1,11 @@
 # 🐳 dx
-
+  
 A CLI that helps you _learn Docker by using it_
 
 ---
 
 ## 🧠 What is this?
-
+  
 dx is a small CLI that sits on top of Docker.  
 But unlike most tools, it does **not try to hide Docker**.
 
@@ -19,111 +19,108 @@ Instead, it helps you:
 
 ## 🔧 Installation
 
-## Requirements
-
+### Requirements
 - Python 3.10+
 - Docker installed and working
 
-## 1. Clone the repository
-
+### 1. Clone the repository
+  
 git clone https://github.com/dx.git  
 cd dx
 
-## 2. Install locally (editable mode)
-
+### 2. Install locally (editable mode)
+  
 pip install -e .
 
-## 3. Verify installation
-
+### 3. Verify installation
+  
 dx --help
 
 ---
 
 ## ✅ Try it
-
+  
 dx run nginx  
 dx run redis  
-dx run python
+dx run python  
 
-To see supported images:
-
+To see supported images:  
 dx supported
 
 ---
 
 ## ⚠️ Notes
-
 - Docker must already be installed and running
 - dx simply calls the Docker CLI
 
 ---
 
 ## 🎯 The goal
-
+  
 Most tools do this:  
-→ Hide complexity
+→ Hide complexity  
 
 dx does something else:  
-→ Reveal complexity — step by step
+→ Reveal complexity — step by step  
 
 ---
 
 ## ⚡ The idea
+  
+Instead of writing:  
 
-Instead of writing:
+docker run -d -p 8080:80 --name web nginx  
 
-docker run -d -p 8080:80 --name web nginx
+You can do:  
 
-You can do:
+dx run nginx  
 
-dx run nginx
-
-And get a guided flow:
+And get a guided flow:  
 
 ? Expose port? (default 8080) →  
 ? Container port? (default 80) →  
 ? Run in background? (Y/n) →  
-? Name container? → web
+? Name container? → web  
 
----
+Generated command:  
 
-Generated command:
+docker run -d -p 8080:80 --name web nginx  
 
-docker run -d -p 8080:80 --name web nginx
+Explanation:  
 
-Explanation:
-
--d → run in background (so your terminal stays free)  
--p → map port 8080 → 80 (so you can access the service from your machine)  
---name → name container "web" (so you can reference it later)
+-d        → run in background (so your terminal stays free)  
+-p        → map port 8080 → 80 (so you can access the service from your machine)  
+--name    → name container "web" (so you can reference it later)  
 
 ---
 
 ## 🔁 The learning loop
-
+  
 Every time you use dx:
 
-- You answer simple prompts
-- A real Docker command is generated
-- You see how it is constructed
-- You understand what each flag does
-- You run it
-- You observe the result
+- You answer simple prompts  
+- A real Docker command is generated  
+- You see how it is constructed  
+- You understand what each flag does  
+- You run it  
+- You observe the result  
 
-👉 Over time, you stop needing dx
+👉 Over time, you stop needing dx  
 
 ---
 
 ## 🔁 How dx works (at a glance)
-
-input → guided prompts → command → explanation → execution → learning
+  
+input → guided prompts → command → explanation → execution → learning  
 
 ---
 
 ## ✅ Commands
 
-## 🔹 dx run <image>
+---
 
+### 🔹 dx run <image>
+  
 Run a container with guided prompts.
 
 If you try an unsupported image:
@@ -140,8 +137,8 @@ Tip: run `dx supported` to see available images
 
 ---
 
-## 🔹 dx supported
-
+### 🔹 dx supported
+  
 Show images supported by dx:
 
 ```
@@ -159,68 +156,116 @@ python    → development (volume + command)
 
 ---
 
+### 🔹 dx stop --all
+
+Stop all running containers.
+
+```
+
+dx stop --all
+
+Stopping all running containers:
+
+docker stop $(docker ps -q)
+→ stop all running containers
+
+Run? (Y/n)
+
+```
+
+👉 Shows the real Docker command before executing  
+👉 Reinforces how to stop containers from the CLI
+
+---
+
+### 🔹 dx rm --all
+
+Remove all containers.
+
+```
+
+dx rm --all
+
+Removing all containers:
+
+docker rm $(docker ps -a -q)
+→ remove all containers
+
+Run? (Y/n)
+
+```
+
+👉 Shows the real Docker command before executing  
+👉 Helps you learn how container cleanup works
+
+---
+
 ## 🧩 Supported concepts
+  
+dx teaches the core parts of Docker:
 
-dx teaches the core parts of `docker run`:
+- `docker run`
+- `docker stop`
+- `docker rm`
 
-- -d → run in background
-- -p → map ports
-- -e → environment variables
-- -v → mount files into container
-- -w → working directory
-- command execution (e.g. python app.py)
+Core flags and concepts:
+
+- -d → run in background  
+- -p → map ports  
+- -e → environment variables  
+- -v → mount files into container  
+- -w → working directory  
+- command execution (e.g. python app.py)  
 
 ---
 
 ## 🧠 Image-aware prompts (core concept)
-
-dx adapts behavior based on the image.
+  
+dx adapts behavior based on the image.  
 
 Examples:
 
-- nginx → ports
-- postgres → ports + environment variables
-- python → volume + command
+- nginx → ports  
+- postgres → ports + environment variables  
+- python → volume + command  
 
 ---
 
-## ✅ Example: python
-
-dx run python
+### ✅ Example: python
+  
+dx run python  
 
 ? Mount current directory? (Y/n) →  
 ? Python file to run (leave empty to skip) → app.py  
 ? Run in background? (Y/n) →  
-? Name container? →
+? Name container? →  
 
----
+Generated command:  
 
-Generated command:
+docker run -v $(pwd):/app -w /app python python app.py  
 
-docker run -v $(pwd):/app -w /app python python app.py
+Explanation:  
 
-Explanation:
-
--v → mount current directory (so your local files are available inside the container)  
--w → set working directory (so commands run in the correct folder)
+-v        → mount current directory (so your local files are available inside the container)  
+-w        → set working directory (so commands run in the correct folder)  
 
 ---
 
 ## ✅ Real Docker execution
-
+  
 dx does NOT simulate anything.  
 It runs the real Docker command and shows real output:
 
 --- Docker output ---  
-<container id / logs>
+<container id / logs>  
 
 ---
 
 ## 🧱 Core principle
-
+  
 Always show:
 
-docker run ...
+docker run / stop / rm ...  
 
 Because:  
 If you don’t see the real command, you don’t learn it.
@@ -228,16 +273,16 @@ If you don’t see the real command, you don’t learn it.
 ---
 
 ## 🧠 Philosophy
-
+  
 This is NOT:
 
-- a Docker replacement
-- a production tool
-- a full abstraction layer
+- a Docker replacement  
+- a production tool  
+- a full abstraction layer  
 
 This IS:
 
-✅ A learning-first CLI
+✅ A learning-first CLI  
 
 Designed to take you from:
 
@@ -247,66 +292,68 @@ Designed to take you from:
 ↓  
 "I understand what I’m doing"  
 ↓  
-"I can write them myself"
+"I can write them myself"  
 
 ---
 
 ## 🏗️ Architecture (simple by design)
-
+  
 src/  
 └── dx/  
- ├── cli.py  
- ├── commands/  
- │ ├── run.py  
- │ ├── run_exec.py  
- │ ├── run_prompts.py  
- │ └── supported.py  
- ├── config/  
- │ └── images.py  
- └── ui/  
- ├── output.py  
- └── prompt.py
+├── cli.py  
+├── commands/  
+│ ├── run.py  
+│ ├── stop.py  
+│ ├── rm.py  
+│ ├── run_exec.py  
+│ ├── run_prompts.py  
+│ └── supported.py  
+├── config/  
+│ └── images.py  
+└── ui/  
+  ├── output.py  
+  └── prompt.py  
 
-👉 Behavior is driven by data — not hardcoded logic
+👉 Behavior is driven by data — not hardcoded logic  
 
 ---
 
 ## 🧠 Why this exists
-
+  
 Learning Docker is hard not because of concepts, but because of:
 
-- remembering syntax
-- remembering flags
-- remembering combinations
+- remembering syntax  
+- remembering flags  
+- remembering combinations  
 
 Example:
 
-docker run [OPTIONS] IMAGE [COMMAND]
+docker run [OPTIONS] IMAGE [COMMAND]  
 
-👉 Simple, but hard to internalize
+👉 Simple, but hard to internalize  
 
 ---
 
 ## 🧠 Summary
-
+  
 dx is not trying to replace Docker.  
-It is trying to make this transition easier:
+It is trying to make this transition easier:  
 
 "I don’t understand this command"  
 ↓  
 "I recognize parts of it"  
 ↓  
-"I can write it myself"
+"I can write it myself"  
 
 ---
 
 ## ⚠️ Note
-
+  
 Docker must already be installed.  
 dx simply calls the Docker CLI.
 
 ---
 
 ## 📄 License
-
+  
 MIT
