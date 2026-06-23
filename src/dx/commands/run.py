@@ -47,12 +47,16 @@ def build_command(image, detached, host_port, container_port, name, env_vars, vo
 def run(image: str):
     """Interactive run command"""
 
-    print()
-
     # ---- input ----
     
     image_name = get_image_name(image)
     profile = get_profile(image_name)
+
+    if image_name not in IMAGE_PROFILES:
+        print(f"\nUnknown image: {image_name}\n")
+        print("Tip: run `dx supported` to see available images\n")
+        return
+
 
     # ---- prompts ----
     host_port, container_port, env_vars, volume, command = collect_inputs(profile)
