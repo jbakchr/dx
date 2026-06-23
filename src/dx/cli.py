@@ -2,6 +2,7 @@ import typer
 
 from dx.commands.run import run as run_command
 from dx.commands.supported import supported as supported_command
+from dx.commands.stop import stop as stop_command
 
 app = typer.Typer()
 
@@ -17,9 +18,11 @@ Usage:
   dx [COMMAND]
 
 Commands:
-  run     Run a container (interactive learning)
+  run         Run a container (interactive learning)
+  stop        Stop containers
+  supported   Show supported images
 
-Tip:
+  Tip:
   Use "dx --help" for more details
 """
         )
@@ -37,3 +40,7 @@ def supported():
     supported_command()
 
 
+@app.command()
+def stop(all: bool = typer.Option(False, "--all", help="Stop all running containers")):
+    """Stop containers"""
+    stop_command(all=all)
