@@ -13,20 +13,20 @@ def explain(detached, host_port, container_port, name, env_vars, volume):
     print("\nExplanation:\n")
 
     if detached:
-        print("-d        → run in background")
+        print("-d        → run in background (so your terminal stays free and non-blocked)")
 
     if host_port and container_port:
-        print(f"-p        → map port {host_port} → {container_port}")
+        print(f"-p        → map port {host_port} → {container_port} (so you can access the service from your machine)")
 
     for key, value in env_vars.items():
-        print(f"-e {key}={value} → set environment variable inside container")
+        print(f"-e        → set environment variable '{key}={value}' (used to set things like passwords and config inside the container)")
 
     if name:
-        print(f'--name    → name container "{name}"')
+        print(f'--name    → name container "{name}" (so you can reference it later)')
     
     if volume:
-        print("-v        → mount current directory into container")
-        print("-w        → set working directory inside container")
+        print("-v        → mount current directory (so your local files are available inside the container)")
+        print("-w        → set working directory (so commands run in the correct folder)")
 
     print()
 
