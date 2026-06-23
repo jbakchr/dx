@@ -53,8 +53,8 @@ def run(image: str):
     profile = get_profile(image_name)
 
     if image_name not in IMAGE_PROFILES:
-        print(f"\nUnknown image: {image_name}\n")
-        print("Tip: run `dx supported` to see available images\n")
+        print(f"\n❌ Unknown image: {image_name}\n")
+        print("💡 Tip: run `dx supported` to see available images\n")
         return
 
 
