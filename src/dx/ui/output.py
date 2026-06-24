@@ -2,14 +2,14 @@
 
 
 def show_run_header() -> None:
-    print("\n──────────────────────────────────")
-    print("\nYou're about to run a real Docker container.\n")
-    print("Answer a few prompts to build the command step by step.\n")
-    print("──────────────────────────────────\n")
+    separator()
+    print("You're about to run a real Docker container.\n")
+    print("Answer a few prompts to build the command step by step.")
+    separator()
 
 
 def separator():
-    print("\n" + "-" * 50 + "\n")
+    print("\n" + "-" * 60 + "\n")
 
 
 def show_command(cmd: str):
