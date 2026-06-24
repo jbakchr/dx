@@ -4,6 +4,7 @@ from dx.commands.run import run as run_command
 from dx.commands.supported import supported as supported_command
 from dx.commands.stop import stop as stop_command
 from dx.commands.rm import rm as rm_command
+from dx.commands.reset import reset as reset_command
 
 app = typer.Typer()
 
@@ -52,3 +53,9 @@ def stop(all: bool = typer.Option(False, "--all", help="Stop all running contain
 def rm(all: bool = typer.Option(False, "--all", help="Remove all containers")):
     """Remove containers"""
     rm_command(all=all)
+
+
+@app.command()
+def reset():
+    """Stop and remove all containers"""
+    reset_command()
