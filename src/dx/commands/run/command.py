@@ -2,8 +2,8 @@
 
 from dx.ui.prompt import ask_detached, ask_name, confirm_run
 from dx.ui.output import separator, show_command, explain
-from dx.commands.run_prompts import collect_inputs
-from dx.commands.run_exec import execute
+from dx.commands.run.prompts import collect_inputs
+from dx.commands.run.exec import execute
 
 from dx.config.images import IMAGE_PROFILES
 
