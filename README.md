@@ -1,6 +1,8 @@
 # 🐳 dx
-  
-A CLI that helps you _learn Docker by using it_
+
+**Learn Docker by using it — not memorizing it**
+
+A CLI that helps you _learn Docker by using it_.
 
 ---
 
