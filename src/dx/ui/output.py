@@ -20,23 +20,50 @@ def show_command(cmd: str):
 def explain(detached, host_port, container_port, name, env_vars, volume):
     print("\nExplanation:\n")
 
+    def line(flag: str, short: str, long: str):
+        print(f"{flag:<10} → {short}")
+        print(f"{'':<10}   {long}\n")
+
     if detached:
-        print("-d        → run in background (so your terminal stays free and non-blocked)")
+        line(
+            "-d",
+            "run in background",
+            "(so your terminal stays free and non-blocked)"
+        )
 
     if host_port and container_port:
-        print(f"-p        → map port {host_port} → {container_port} (so you can access the service from your machine)")
+        line(
+            "-p",
+            f"map port {host_port} → {container_port}",
+            "(so you can access the service from your machine)"
+        )
 
     for key, value in env_vars.items():
-        print(f"-e        → set environment variable '{key}={value}' (used to set things like passwords and config inside the container)")
+        line(
+            "-e",
+            f"set environment variable '{key}={value}'",
+            "(used to set things like passwords and config inside the container)"
+        )
 
     if name:
-        print(f'--name    → name container "{name}" (so you can reference it later)')
-    
-    if volume:
-        print("-v        → mount current directory (so your local files are available inside the container)")
-        print("-w        → set working directory (so commands run in the correct folder)")
+        line(
+            "--name",
+            f'name container "{name}"',
+            "(so you can reference it later)"
+        )
 
-    print()
+    if volume:
+        line(
+            "-v",
+            "mount current directory",
+            "(so your local files are available inside the container)"
+        )
+        line(
+            "-w",
+            "set working directory",
+            "(so commands run in the correct folder)"
+        )
+
 
 
 def execution_header():
