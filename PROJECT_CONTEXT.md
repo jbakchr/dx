@@ -1,8 +1,8 @@
-## dx – Project Context
+# dx – Project Context
 
 ---
 
-### 🧠 What this project is
+## 🧠 What this project is
 
 dx is a small CLI tool that helps me learn Docker by actively using it.
 
@@ -16,7 +16,7 @@ The focus is:
 
 ---
 
-### 🎯 Core philosophy
+## 🎯 Core philosophy
 
 The goal is not:
 
@@ -35,12 +35,11 @@ Success is measured by:
 
 ---
 
-### ⚡ Key realization (important)
+## ⚡ Key realization (important)
 
 dx should NOT replace Docker.
 
 Instead, it should:
-
 ✅ expose the real Docker command  
 ✅ explain it  
 ✅ reinforce it through repetition
@@ -53,7 +52,7 @@ The biggest risk is:
 
 ---
 
-### 🔁 Current behavior loop
+## 🔁 Current behavior loop
 
 What happens when using dx:
 
@@ -68,56 +67,70 @@ dx run <image>
 
 ```
 
-The tool is becoming:
+Now extended to a full workflow:
+
+```
+
+dx run → experiment → dx reset → repeat
+
+```
+
+The tool is now:
 
 ✅ a guided learning loop  
 (not just a CLI wrapper)
 
 ---
 
-### 🧪 Current state
+## 🧪 Current state
 
 dx currently supports:
 
-- ✅ `dx run <image>`
+- ✅ dx run <image>
+- ✅ dx stop --all
+- ✅ dx rm --all
+- ✅ dx reset
 - ✅ interactive prompts
 - ✅ real Docker execution
-- ✅ explanation of flags
+- ✅ explanation of flags (with “why”)
 - ✅ image-aware behavior via profiles
 
 Current image support:
 
-- nginx  
-  → port + container port
-
-- postgres  
-  → environment variables
+- nginx → ports
+- postgres → environment variables
+- mysql → environment variables
+- redis → ports
+- node → volumes
+- python → volumes + commands
 
 ---
 
-### 🏗️ Current architecture (important)
+## 🏗️ Current architecture (important)
 
-```
-
-CLI (Typer)
-→ commands/run.py (orchestration)
-→ ui/prompt.py (input)
-→ ui/output.py (display + explanation)
-→ config/images.py (image profiles)
+CLI (Typer)  
+→ commands/run/ (orchestration, prompts, execution)  
+→ commands/stop.py  
+→ commands/rm.py  
+→ commands/reset.py  
+→ commands/supported.py  
+→ ui/prompt.py (input)  
+→ ui/output.py (display + explanation)  
+→ config/images.py (image profiles)  
 → subprocess (Docker CLI)
-
-```
 
 Principles:
 
 - CLI should remain simple and predictable
+- Complex commands can be grouped (run/)
+- Simple commands stay flat
 - UI logic is separated from command logic
 - Image-specific behavior lives in config
 - Docker is always visible (never hidden)
 
 ---
 
-### 🔍 Key insights so far
+## 🔍 Key insights so far
 
 - ✅ Seeing the real command is critical for learning
 - ✅ Explaining flags reinforces understanding
@@ -125,14 +138,20 @@ Principles:
 - ✅ Too many prompts = friction
 - ✅ Simplicity beats completeness
 - ✅ Real Docker output is valuable (do not hide it)
+- ✅ Showing real lifecycle commands (stop/rm) deepens learning
+- ✅ Repetition (run → reset) builds real intuition
 
 ---
 
-### 🧠 Core concept (important)
+## 🧠 Core concept (important)
 
 The most important idea in dx:
 
-> IMAGE_PROFILES
+```
+
+IMAGE\_PROFILES
+
+```
 
 Example:
 
@@ -151,7 +170,7 @@ This allows dx to:
 
 ---
 
-### 🧭 Intended direction (high level)
+## 🧭 Intended direction (high level)
 
 dx evolves from:
 
@@ -169,52 +188,43 @@ guided Docker learning system
 
 ```
 
-Future direction:
+Now extended to:
 
 ```
 
-input → guided prompts → command → explanation → execution → learning
+run → stop → remove → reset → repeat
 
 ```
 
 ---
 
-### 🧱 Near-term evolution priorities
+## 🧱 Near-term evolution priorities
 
-#### 1. Expand image profiles (highest value)
+### 1. Reduce friction (highest value)
 
-- Add redis
-- Add mysql
-- Add node
-- Add python
-
-Goal:
-→ cover common real-world use cases
+- Remove unnecessary prompts
+- Improve prompt wording
+- Keep flow fast and obvious
 
 ---
 
-#### 2. Improve explanations
+### 2. Improve learning clarity
 
-- Explain more flags when needed
-- Slightly improve clarity (but stay short)
-- Start introducing "why this matters"
-
-Important:
-
-- no long descriptions
-- no walls of text
+- Slightly refine explanations
+- Keep adding small “why” improvements
+- Maintain short, practical explanations
 
 ---
 
-#### 3. Maintain simplicity
+### 3. Maintain simplicity
 
-- Avoid adding too many prompts
-- Avoid trying to support all Docker features
+- Avoid adding too many commands
+- Avoid abstraction layers
 - Keep everything predictable
 
 ---
 
-### 🔄 Structural direction (important)
+## 🔄 Structural direction (important)
 
 From:
 
@@ -228,7 +238,7 @@ To:
 
 ```
 
-"guide the user toward correct command usage"
+"guide the user through real Docker workflows"
 
 ```
 
@@ -242,7 +252,7 @@ to:
 
 ---
 
-### 🚫 Non-goals
+## 🚫 Non-goals
 
 - Not a full Docker abstraction layer
 - Not a replacement for Docker CLI
@@ -252,7 +262,7 @@ to:
 
 ---
 
-### ✅ What makes this project different
+## ✅ What makes this project different
 
 This is not:
 
@@ -273,7 +283,7 @@ It is designed to:
 
 ---
 
-### 🧠 Why this matters (personally)
+## 🧠 Why this matters (personally)
 
 This project helps:
 
@@ -289,23 +299,26 @@ It is both:
 
 ---
 
-### 🚀 What I want help with in a new chat
+## 🚀 What I want help with in a new chat
 
 - Continue evolving dx step-by-step
 - Keep everything minimal and focused
-- Expand image profiles cleanly
-- Improve UX without overcomplicating
-- Design learning-oriented improvements
+- Improve real-world workflow experience
+- Reduce friction without adding complexity
+- Strengthen learning through repetition
 
 ---
 
-### 💡 How to use this context
+## 💡 How to use this context
 
 When starting a new chat, say:
 
+```
+
 I’m working on this project:
-\[paste PROJECT_CONTEXT.md\]
+\[paste PROJECT\_CONTEXT.md]
 
 I want help evolving it step-by-step without overengineering.
+Let’s start with \[X]
 
-Let’s start with \[X\]
+```
