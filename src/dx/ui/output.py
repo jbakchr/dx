@@ -1,5 +1,13 @@
 # src/dx/ui/output.py
 
+
+def show_run_header() -> None:
+    print("\n──────────────────────────────────")
+    print("\nYou're about to run a real Docker container.\n")
+    print("Answer a few prompts to build the command step by step.\n")
+    print("──────────────────────────────────\n")
+
+
 def separator():
     print("\n" + "-" * 50 + "\n")
 

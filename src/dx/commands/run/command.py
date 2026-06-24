@@ -1,7 +1,7 @@
 # src/dx/commands/run.py
 
 from dx.ui.prompt import ask_detached, ask_name, confirm_run
-from dx.ui.output import separator, show_command, explain
+from dx.ui.output import separator, show_command, explain, show_run_header
 from dx.commands.run.prompts import collect_inputs
 from dx.commands.run.exec import execute
 
@@ -57,6 +57,9 @@ def run(image: str):
         print("💡 Tip: run `dx supported` to see available images\n")
         return
 
+
+    # ---- header ----
+    show_run_header()
 
     # ---- prompts ----
     host_port, container_port, env_vars, volume, command = collect_inputs(profile)
