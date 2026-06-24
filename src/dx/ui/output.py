@@ -14,7 +14,7 @@ def separator():
 
 def show_command(cmd: str):
     print("Generated command:\n")
-    print(cmd)
+    print(f"👉  {cmd}")
 
 
 def explain(detached, host_port, container_port, name, env_vars, volume):
