@@ -52,3 +52,32 @@ COPY → adds files from your machine into the image
 so your code is available inside the container
 """.strip()
         )
+
+    # Step 4 — Command
+    # Step 4 — Command
+    cmd = input_prompt("Command to run (e.g. python app.py)", default="python app.py")
+
+    # Convert string → JSON array style
+    cmd_parts = cmd.split() if cmd else ["python", "app.py"]
+    cmd_as_list = ", ".join(f'"{part}"' for part in cmd_parts)
+
+    cmd_line = f"CMD [{cmd_as_list}]"
+    dockerfile_lines.append(cmd_line)
+
+    print_instruction(cmd_line)
+
+    print(
+        """
+    CMD → defines the default command to run
+    when the container starts
+    """.strip()
+    )
+
+    # Final output
+    print("\n" + "-" * 60)
+    print("\nYour Dockerfile:\n")
+
+    for line in dockerfile_lines:
+        print(line)
+
+    print("\n" + "-" * 60)
