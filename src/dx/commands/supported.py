@@ -4,15 +4,22 @@ from dx.config.images import IMAGE_PROFILES
 
 
 def supported():
-    print("\nSupported images:\n")
+    print("Supported images:\n")
 
     for name, profile in IMAGE_PROFILES.items():
-        description = profile.get("description")
+        description = profile.get("description", "")
 
-        # If description exists → show it
+        # Check if dockerfile support exists
+        dockerfile_defaults = profile.get("dockerfile")
+        has_dockerfile = bool(dockerfile_defaults and (
+            dockerfile_defaults.get("base") or
+            dockerfile_defaults.get("workdir") or
+            dockerfile_defaults.get("cmd")
+        ))
+
+        marker = " [dockerfile]" if has_dockerfile else ""
+
         if description:
-            print(f"{name:<10} → {description}")
+            print(f"{name:<10} → {description}{marker}")
         else:
-            print(f"{name}")
-    
-    print()
+            print(f"{name}{marker}")
