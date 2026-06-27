@@ -1,5 +1,5 @@
 # 🐳 dx — Roadmap
-  
+
 Build dx slowly.  
 Each step should be small, useful, and testable.
 
@@ -9,29 +9,29 @@ Each step should be small, useful, and testable.
 
 - Keep things minimal
 - Build only what is needed right now
-- Always prefer working software over ideas
-- Each phase should feel like:
-→ "Ahh… this is already useful"
+- Prefer working software over ideas
+- Each phase should feel like:  
+  → "Ahh… this is already useful"
 
 ---
 
 ## ✅ CURRENT STATE (IMPORTANT)
 
-dx is now a **learning-first Docker CLI** with a strong, polished learning loop.
+dx is now a **learning-first Docker CLI** with a **complete learning loop**.
 
 ---
 
 ### ✅ Core capabilities
 
-- ✅ Installable CLI (pip install -e .)
-- ✅ dx run <image>
-- ✅ dx stop --all
-- ✅ dx rm --all
-- ✅ dx reset
+- ✅ Installable CLI (`pip install -e .`)
+- ✅ `dx run`
+- ✅ `dx stop --all`
+- ✅ `dx rm --all`
+- ✅ `dx reset`
 - ✅ Interactive prompts
 - ✅ Real Docker execution
 - ✅ Command generation + explanation (with “why”)
-- ✅ Image-aware behavior via IMAGE_PROFILES
+- ✅ Image-aware behavior via `IMAGE_PROFILES`
 - ✅ Guardrails for unsupported images
 - ✅ Discoverability via `dx supported`
 
@@ -39,97 +39,92 @@ dx is now a **learning-first Docker CLI** with a strong, polished learning loop.
 
 ### ✅ Learning model (important)
 
-dx now teaches the **core Docker container lifecycle**:
+dx teaches the **core Docker container lifecycle**:
 
 #### 🔹 Run
-- ✅ docker run
-- ✅ -d → run in background
-- ✅ -p → ports
-- ✅ -e → environment variables
-- ✅ -v → volumes
-- ✅ -w → working directory
-- ✅ command execution (e.g. python app.py)
+
+- ✅ `docker run`
+- ✅ `-d` → background
+- ✅ `-p` → ports
+- ✅ `-e` → environment variables
+- ✅ `-v` → volumes
+- ✅ `-w` → working directory
+- ✅ command execution
 
 #### 🔹 Stop
-- ✅ docker stop $(docker ps -q)
+
+- ✅ `docker stop $(docker ps -q)`
 
 #### 🔹 Remove
-- ✅ docker rm $(docker ps -a -q)
 
-#### 🔹 Reset (workflow loop)
-- ✅ run → reset → run → repeat
+- ✅ `docker rm $(docker ps -a -q)`
 
-👉 All commands are **shown before execution**  
-👉 Explanations include **“why this matters”**
+#### 🔹 Reset (core loop)
+
+```
+
+dx run → experiment → dx reset → repeat
+
+```
+
+👉 This loop is now the **core learning mechanic**
+
+- ✅ Stops + removes containers
+- ✅ Shows real commands before execution
+- ✅ Encourages repetition
+- ✅ Enables fast iteration
+
+---
+
+### ✅ UX (current experience)
+
+dx now has a **clear and structured learning flow**:
+
+- ✅ Context-setting header before prompts
+- ✅ Focused command display:
+
+```
+
+👉  docker run ...
+
+```
+
+- ✅ Layered explanations:
+
+```
+
+-d        → run in background
+so your terminal stays free
+
+```
+
+- ✅ Consistent and scannable output
+- ✅ Real Docker output always visible
+
+👉 UX now reinforces learning at every step
 
 ---
 
 ### ✅ Supported images
 
 #### 🌐 Web
+
 - nginx (ports)
 
 #### 🗄️ Databases
+
 - postgres (ports + env)
 - mysql (ports + env)
 - redis (ports)
 
 #### 💻 Development
+
 - node (volume)
 - python (volume + command)
 
 ---
 
-### ✅ UX improvements (recent)
-
-- ✅ Explanations include real-world purpose
-- ✅ Output formatting is consistent and aligned
-- ✅ Environment variables no longer break alignment
-
-- ✅ Clear error for unknown images:
-
-```
-
-Unknown image: foo
-
-Tip: run `dx supported` to see available images
-
-```
-
-- ✅ `dx supported` command for discoverability:
-
-```
-
-Supported images:
-
-nginx     → web server (ports)
-postgres  → database (ports + env)
-mysql     → database (ports + env)
-redis     → cache (ports)
-node      → development (volume)
-python    → development (volume + command)
-
-```
-
-- ✅ Lifecycle commands show real Docker usage:
-
-```
-
-dx stop --all
-→ docker stop $(docker ps -q)
-
-dx rm --all
-→ docker rm $(docker ps -a -q)
-
-dx reset
-→ docker stop $(docker ps -q)
-→ docker rm $(docker ps -a -q)
-
-```
-
----
-
-### 🧠 Key insight (where dx is now)
+### 🧠 Key insight
 
 dx has evolved from:
 
@@ -155,63 +150,55 @@ run → stop → remove → reset → repeat
 
 ```
 
-The core loop is:
-
-```
-
-input → prompts → command → explanation → execution → learning
-
-```
-
-👉 This loop is now **complete for real-world container usage**
+👉 A complete, repeatable workflow
 
 ---
 
 ## 🎯 CURRENT FOCUS
 
-👉 dx is now in a **polish + friction reduction phase**  
-NOT a feature-building phase
+dx is now in a:
+
+👉 **polish + friction reduction phase**
+
+NOT a feature-building phase.
 
 ---
 
-## ⚡ Next Phase — Real-world friction reduction
+## ⚡ Phase — Friction reduction (highest value)
 
 Goal:
 → Make repeated usage feel effortless
 
-#### Focus areas
+Focus areas:
 
-- Improve small UX details
-- Reduce unnecessary repetition
-- Improve feedback (empty states, clarity)
-- Optimize the run → reset loop
+- Remove unnecessary friction
+- Optimize run → reset flow
+- Improve clarity and feedback
+- Tighten interaction speed
 
-#### Rule
-
+Rule:
 If something:
+
 - slows you down
 - feels repetitive
 - breaks flow  
-
-→ simplify it
+  → simplify it
 
 ---
 
 ## ⚡ Phase — Prompt UX tightening
 
 Goal:
-→ Make prompts feel natural and obvious
+→ Make prompts feel obvious and natural
 
-#### Ideas
+Ideas:
 
 - Improve wording clarity
 - Improve ordering
 - Remove unnecessary prompts
 
-#### Rule
-
-If a prompt:
-- doesn’t provide learning value  
+Rule:
+If a prompt does not provide learning value  
 → remove or simplify it
 
 ---
@@ -221,85 +208,90 @@ If a prompt:
 Goal:
 → Increase understanding without adding complexity
 
-#### Ideas
+Ideas:
 
-- Slightly refine explanations
-- Improve clarity of “why” statements
+- Refine explanations slightly
+- Improve “why it matters”
 - Keep explanations:
   - short
   - practical
   - consistent
 
-#### Rule
-
-No long explanations. No theory. No teaching modes.
+Rule:
+No long explanations. No teaching mode.
 
 ---
 
-## ⚡ Phase — Personal workflow patterns (lightweight)
+## ⚡ Phase — Workflow alignment
 
 Goal:
-→ Align dx with real usage patterns
+→ Make dx feel like a natural part of Docker usage
 
-#### Ideas
+Ideas:
 
-- auto `--rm` for temporary runs
 - small defaults that reduce friction
-- tiny workflow shortcuts (like `reset`)
+- lightweight workflow helpers (like `reset`)
+- remove unnecessary repetition
 
-#### Success
-
+Success:
 dx feels like:
+
 → a natural extension of how you use Docker
 
 ---
 
 ## ⏳ Later (only if still simple)
 
-Not priorities right now:
+Not priorities:
 
 - dx explain
 - dry-run mode
 - dx learn (pattern training)
-- small “recipes”
+- recipes / presets
 
 👉 Only revisit if:
-- dx stays simple
-- and a real need appears
+
+- dx remains simple
+- and real need appears
 
 ---
 
 ## ⚠️ Things to AVOID (very important)
 
-- ❌ Do NOT turn dx into a full Docker abstraction layer
-- ❌ Do NOT mirror large parts of Docker CLI
-- ❌ Do NOT support all Docker features
-- ❌ Do NOT introduce complex config systems
-- ❌ Do NOT hide real Docker commands  
+- ❌ Becoming a full Docker abstraction layer
+- ❌ Mirroring the full Docker CLI
+- ❌ Supporting everything
+- ❌ Adding complex config systems
+- ❌ Hiding real Docker commands
 
 👉 Simplicity is the product
 
 ---
 
 ## 🧠 Final rule
-  
+
 If something feels:
+
 - too complex
 - too abstract
-- too “big”  
+- too big
 
 → skip it
 
 ---
 
 ## 🏁 Definition of success
-  
+
 You move from:
 
-"I copy Docker commands"  
-↓  
-"I recognize patterns"  
-↓  
-"I understand what I am doing"  
-↓  
+```
+
+"I copy Docker commands"
+↓
+"I recognize patterns"
+↓
+"I understand what I’m doing"
+↓
 "I don’t need dx anymore"
+
+```
