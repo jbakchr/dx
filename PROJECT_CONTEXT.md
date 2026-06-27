@@ -57,9 +57,13 @@ The biggest risk is:
 
 ---
 
-## 🔁 Current behavior loop
+## 🔁 Current learning loops
 
-The core experience in dx is now a **complete learning loop**:
+dx now supports **two connected learning loops**:
+
+---
+
+### 🔹 Run loop (container lifecycle)
 
 ```
 
@@ -67,18 +71,14 @@ dx run → experiment → dx reset → repeat
 
 ```
 
-This is not just a workflow — it is:
-
-✅ the core learning mechanic
-
-What happens in each cycle:
+What happens:
 
 ```
 
 dx run <image>
 → answer prompts
-→ see generated command (clearly highlighted)
-→ understand flags (short + “why”)
+→ see generated command
+→ understand flags
 → run real Docker
 → observe real output
 
@@ -95,10 +95,46 @@ dx reset
 
 ```
 
-The tool is now:
+---
 
-✅ a guided learning loop  
-(not just a CLI wrapper)
+### 🔹 Build loop (Dockerfile)
+
+```
+
+dx dockerfile <image>
+→ answer prompts
+→ see instructions
+→ understand Dockerfile syntax
+→ build mental model
+
+```
+
+What happens:
+
+```
+
+dx dockerfile python
+→ FROM
+→ WORKDIR
+→ COPY
+→ CMD
+→ final Dockerfile
+
+```
+
+---
+
+### 🔹 Combined loop (full learning system)
+
+```
+
+dx dockerfile → understand build
+→ dx run → experiment
+→ dx reset → repeat
+
+```
+
+👉 dx now teaches **build + run together**
 
 ---
 
@@ -107,25 +143,30 @@ The tool is now:
 dx currently supports:
 
 - ✅ dx run
+- ✅ dx dockerfile
 - ✅ dx stop --all
 - ✅ dx rm --all
 - ✅ dx reset
 
 - ✅ interactive prompts
 - ✅ real Docker execution
-- ✅ command generation + explanation (with “why”)
-- ✅ image-aware behavior via profiles
+- ✅ command + instruction explanation (“why”)
+- ✅ image-aware behavior via IMAGE_PROFILES
+- ✅ guardrails for unsupported images
 
-### ✅ UX (important)
+---
 
-The experience is now structured to reinforce learning:
+## ✅ UX (important)
 
-- ✅ Context header before prompts
-- ✅ Clear command focus:
+The experience is structured to reinforce learning:
+
+- ✅ Context header before flows
+- ✅ Clear focus on real syntax:
 
 ```
 
-👉  docker run ...
+👉 docker run ...
+👉 FROM python:3.11
 
 ```
 
@@ -133,7 +174,7 @@ The experience is now structured to reinforce learning:
 
 ```
 
--d        → run in background
+-d → run in background
 so your terminal stays free
 
 ```
@@ -147,38 +188,24 @@ so your terminal stays free
 ## 🏗️ Current architecture (important)
 
 CLI (Typer)  
-→ commands/run/ (orchestration, prompts, execution)  
+→ commands/run/  
+→ commands/dockerfile/  
 → commands/stop.py  
 → commands/rm.py  
 → commands/reset.py  
 → commands/supported.py  
 → ui/prompt.py (input)  
 → ui/output.py (display + explanation)  
-→ config/images.py (image profiles)  
+→ config/images.py (IMAGE_PROFILES)  
 → subprocess (Docker CLI)
 
 ### Principles:
 
-- CLI should remain simple and predictable
-- Complex commands can be grouped (run/)
-- Simple commands stay flat
-- UI logic is separated from command logic
+- CLI stays simple and predictable
+- Commands remain flat (no deep nesting)
+- UI logic is separate from command logic
 - Image-specific behavior lives in config
 - Docker is always visible (never hidden)
-
----
-
-## 🔍 Key insights so far
-
-- ✅ Seeing the real command is critical for learning
-- ✅ Explaining flags reinforces understanding
-- ✅ Prompts must be relevant (image-aware)
-- ✅ Too many prompts = friction
-- ✅ Simplicity beats completeness
-- ✅ Real Docker output is valuable (do not hide it)
-- ✅ Showing lifecycle commands deepens learning
-- ✅ Repetition (run → reset → repeat) builds intuition
-- ✅ UX structure directly impacts learning
 
 ---
 
@@ -196,16 +223,34 @@ Example:
 
 ```
 
-nginx → ports
-postgres → environment variables
+nginx  → ports
+postgres → env variables
+python → volume + command + dockerfile defaults
 
 ```
 
-This allows dx to:
+IMAGE_PROFILES powers:
 
-✅ adapt behavior  
-✅ stay simple  
-✅ guide correct usage
+✅ runtime prompts  
+✅ defaults  
+✅ Dockerfile generation  
+✅ learning context
+
+👉 One system → multiple learning paths
+
+---
+
+## 🔍 Key insights so far
+
+- ✅ Seeing the real syntax is critical for learning
+- ✅ Explaining flags/instructions reinforces understanding
+- ✅ Prompts must be relevant (image-aware)
+- ✅ Too many prompts = friction
+- ✅ Simplicity beats completeness
+- ✅ Real Docker output is valuable (do not hide it)
+- ✅ Repetition builds intuition
+- ✅ Build + run together deepen understanding
+- ✅ UX structure directly impacts learning
 
 ---
 
@@ -215,7 +260,7 @@ dx evolves from:
 
 ```
 
-run command generator
+"generate a command"
 
 ```
 
@@ -223,7 +268,7 @@ to:
 
 ```
 
-guided Docker learning system
+"guide the user through real Docker workflows"
 
 ```
 
@@ -231,11 +276,11 @@ Now extended to:
 
 ```
 
-run → stop → remove → reset → repeat
+build → run → stop → remove → reset → repeat
 
 ```
 
-👉 A complete, repeatable workflow
+👉 A complete, repeatable learning system
 
 ---
 
@@ -245,6 +290,7 @@ run → stop → remove → reset → repeat
 
 - Remove unnecessary prompts
 - Improve prompt wording
+- Improve defaults (IMAGE_PROFILES-driven)
 - Keep flow fast and obvious
 
 ---
@@ -253,7 +299,10 @@ run → stop → remove → reset → repeat
 
 - Refine explanations slightly
 - Improve “why” statements
-- Keep explanations short and practical
+- Keep explanations:
+  - short
+  - practical
+  - consistent
 
 ---
 
@@ -279,7 +328,7 @@ To:
 
 ```
 
-"guide the user through real Docker workflows"
+"guide real workflows step-by-step"
 
 ```
 
@@ -307,15 +356,15 @@ to:
 
 This is not:
 
-- a wrapper tool
-- a shortcut CLI
-- a productivity tool
+- a wrapper CLI
+- a shortcut tool
+- a productivity optimizer
 
 This is:
 
-✅ a learning-first CLI
+✅ a learning-first system
 
-It is designed to:
+Designed to:
 
 - expose real commands
 - reinforce understanding
@@ -329,9 +378,9 @@ It is designed to:
 This project helps:
 
 - reduce friction when using Docker
-- move from copying commands → understanding them
+- move from copying → understanding
 - build confidence with CLI tools
-- create a better learning experience
+- avoid repeatedly returning to docs
 
 It is both:
 
@@ -357,7 +406,6 @@ When starting a new chat, say:
 ```
 
 I’m working on this project:
-
 \[paste PROJECT\_CONTEXT.md]
 
 I want help evolving it step-by-step without overengineering.
