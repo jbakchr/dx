@@ -17,3 +17,10 @@ def ask_name():
 def confirm_run():
     val = input("Run? (Y/n) ").strip().lower()
     return val != "n"
+
+def input_prompt(label: str, default: str | None = None):
+    if default:
+        value = input(f"? {label} ({default}) → ").strip()
+        return value if value else default
+    else:
+        return input(f"? {label} → ").strip()
