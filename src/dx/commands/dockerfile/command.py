@@ -36,3 +36,19 @@ WORKDIR → sets the directory inside the container
 where commands will run
 """.strip()
     )
+
+    # Step 3 — Copy files (optional)
+    copy = input("? Copy current directory into container? (Y/n) → ").strip().lower()
+
+    if copy != "n":
+        copy_line = "COPY . ."
+        dockerfile_lines.append(copy_line)
+
+        print_instruction(copy_line)
+
+        print(
+            """
+COPY → adds files from your machine into the image
+so your code is available inside the container
+""".strip()
+        )
