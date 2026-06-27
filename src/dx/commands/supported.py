@@ -11,8 +11,8 @@ def supported():
 
         # If description exists → show it
         if description:
-            print(f"- {name:<10} → {description}")
+            print(f"{name:<10} → {description}")
         else:
-            print(f"- {name}")
+            print(f"{name}")
     
     print()
