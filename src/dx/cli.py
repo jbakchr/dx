@@ -63,6 +63,11 @@ def reset():
     reset_command()
 
 @app.command()
-def dockerfile():
+def dockerfile(
+    image: str = typer.Argument(
+        None,
+        help="Base image profile (e.g. python, node, nginx)",
+    )
+):
     """Run the Dockerfile command"""
-    run_dockerfile_command()
+    run_dockerfile_command(image=image)

@@ -2,13 +2,42 @@ from dx.ui.output import print_header, print_instruction
 from dx.ui.prompt import input_prompt
 
 
-def run():
+DOCKERFILE_DEFAULTS = {
+    "python": {
+        "base": "python:3.11",
+        "workdir": "/app",
+        "cmd": "python app.py",
+    },
+    "node": {
+        "base": "node:18",
+        "workdir": "/app",
+        "cmd": "npm start",
+    },
+    "nginx": {
+        "base": "nginx:latest",
+        "workdir": None,
+        "cmd": None,
+    },
+}
+
+
+def run(image: str = None):
     print_header("Dockerfile Builder")
+
+    # Optional: show which defaults are used
+    if image:
+        print(f"Using defaults for: {image}\n")
+
+    defaults = DOCKERFILE_DEFAULTS.get(image, {})
+
+    default_base = defaults.get("base", "python:3.11")
+    default_workdir = defaults.get("workdir", "/app")
+    default_cmd = defaults.get("cmd", "python app.py")
 
     dockerfile_lines = []
 
     # Step 1 — Base image
-    base_image = input_prompt("Base image", default="python:3.11")
+    base_image = input_prompt("Base image", default=default_base)
 
     from_line = f"FROM {base_image}"
     dockerfile_lines.append(from_line)
@@ -22,20 +51,21 @@ everything builds on top of this
 """.strip()
     )
 
-    # Step 2 — Working directory
-    workdir = input_prompt("Working directory", default="/app")
+    # Step 2 — Working directory (optional)
+    if default_workdir:
+        workdir = input_prompt("Working directory", default=default_workdir)
 
-    workdir_line = f"WORKDIR {workdir}"
-    dockerfile_lines.append(workdir_line)
+        workdir_line = f"WORKDIR {workdir}"
+        dockerfile_lines.append(workdir_line)
 
-    print_instruction(workdir_line)
+        print_instruction(workdir_line)
 
-    print(
-        """
+        print(
+            """
 WORKDIR → sets the directory inside the container
 where commands will run
 """.strip()
-    )
+        )
 
     # Step 3 — Copy files (optional)
     copy = input("? Copy current directory into container? (Y/n) → ").strip().lower()
@@ -53,25 +83,27 @@ so your code is available inside the container
 """.strip()
         )
 
-    # Step 4 — Command
-    # Step 4 — Command
-    cmd = input_prompt("Command to run (e.g. python app.py)", default="python app.py")
+    # Step 4 — Command (optional)
+    if default_cmd:
+        cmd = input_prompt(
+            "Command to run (e.g. python app.py)",
+            default=default_cmd
+        )
 
-    # Convert string → JSON array style
-    cmd_parts = cmd.split() if cmd else ["python", "app.py"]
-    cmd_as_list = ", ".join(f'"{part}"' for part in cmd_parts)
+        cmd_parts = cmd.split() if cmd else default_cmd.split()
+        cmd_as_list = ", ".join(f'"{part}"' for part in cmd_parts)
 
-    cmd_line = f"CMD [{cmd_as_list}]"
-    dockerfile_lines.append(cmd_line)
+        cmd_line = f"CMD [{cmd_as_list}]"
+        dockerfile_lines.append(cmd_line)
 
-    print_instruction(cmd_line)
+        print_instruction(cmd_line)
 
-    print(
-        """
-    CMD → defines the default command to run
-    when the container starts
-    """.strip()
-    )
+        print(
+            """
+CMD → defines the default command to run
+when the container starts
+""".strip()
+        )
 
     # Final output
     print("\n" + "-" * 60)
@@ -81,3 +113,5 @@ so your code is available inside the container
         print(line)
 
     print("\n" + "-" * 60)
+
+    print("\n👉 Copy this into a file named 'Dockerfile'\n")
