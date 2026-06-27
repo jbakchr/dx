@@ -12,6 +12,7 @@ The focus is NOT:
 - to simplify everything away
 
 The focus is:
+
 ✅ learning Docker through guided repetition
 
 ---
@@ -25,6 +26,7 @@ The goal is not:
 - to be faster than Docker
 
 The goal is:
+
 ✅ to make Docker understandable through use
 
 Success is measured by:
@@ -40,38 +42,56 @@ Success is measured by:
 dx should NOT replace Docker.
 
 Instead, it should:
+
 ✅ expose the real Docker command  
 ✅ explain it  
 ✅ reinforce it through repetition
 
 The biggest risk is not:
+
 ❌ missing features
 
 The biggest risk is:
+
 ❗ overengineering and losing simplicity
 
 ---
 
 ## 🔁 Current behavior loop
 
-What happens when using dx:
+The core experience in dx is now a **complete learning loop**:
+
+```
+
+dx run → experiment → dx reset → repeat
+
+```
+
+This is not just a workflow — it is:
+
+✅ the core learning mechanic
+
+What happens in each cycle:
 
 ```
 
 dx run <image>
 → answer prompts
-→ see generated command
-→ understand flags
+→ see generated command (clearly highlighted)
+→ understand flags (short + “why”)
 → run real Docker
-→ observe output
+→ observe real output
 
 ```
 
-Now extended to a full workflow:
+Then:
 
 ```
 
-dx run → experiment → dx reset → repeat
+dx reset
+→ stop containers
+→ remove containers
+→ start fresh
 
 ```
 
@@ -86,23 +106,41 @@ The tool is now:
 
 dx currently supports:
 
-- ✅ dx run <image>
+- ✅ dx run
 - ✅ dx stop --all
 - ✅ dx rm --all
 - ✅ dx reset
+
 - ✅ interactive prompts
 - ✅ real Docker execution
-- ✅ explanation of flags (with “why”)
+- ✅ command generation + explanation (with “why”)
 - ✅ image-aware behavior via profiles
 
-Current image support:
+### ✅ UX (important)
 
-- nginx → ports
-- postgres → environment variables
-- mysql → environment variables
-- redis → ports
-- node → volumes
-- python → volumes + commands
+The experience is now structured to reinforce learning:
+
+- ✅ Context header before prompts
+- ✅ Clear command focus:
+
+```
+
+👉  docker run ...
+
+```
+
+- ✅ Layered explanations:
+
+```
+
+-d        → run in background
+so your terminal stays free
+
+```
+
+- ✅ Real Docker output is always visible
+
+👉 UX is part of the learning system
 
 ---
 
@@ -119,7 +157,7 @@ CLI (Typer)
 → config/images.py (image profiles)  
 → subprocess (Docker CLI)
 
-Principles:
+### Principles:
 
 - CLI should remain simple and predictable
 - Complex commands can be grouped (run/)
@@ -138,8 +176,9 @@ Principles:
 - ✅ Too many prompts = friction
 - ✅ Simplicity beats completeness
 - ✅ Real Docker output is valuable (do not hide it)
-- ✅ Showing real lifecycle commands (stop/rm) deepens learning
-- ✅ Repetition (run → reset) builds real intuition
+- ✅ Showing lifecycle commands deepens learning
+- ✅ Repetition (run → reset → repeat) builds intuition
+- ✅ UX structure directly impacts learning
 
 ---
 
@@ -196,6 +235,8 @@ run → stop → remove → reset → repeat
 
 ```
 
+👉 A complete, repeatable workflow
+
 ---
 
 ## 🧱 Near-term evolution priorities
@@ -210,9 +251,9 @@ run → stop → remove → reset → repeat
 
 ### 2. Improve learning clarity
 
-- Slightly refine explanations
-- Keep adding small “why” improvements
-- Maintain short, practical explanations
+- Refine explanations slightly
+- Improve “why” statements
+- Keep explanations short and practical
 
 ---
 
@@ -316,6 +357,7 @@ When starting a new chat, say:
 ```
 
 I’m working on this project:
+
 \[paste PROJECT\_CONTEXT.md]
 
 I want help evolving it step-by-step without overengineering.
