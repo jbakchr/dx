@@ -5,6 +5,7 @@ from dx.commands.supported import supported as supported_command
 from dx.commands.stop import stop as stop_command
 from dx.commands.rm import rm as rm_command
 from dx.commands.reset import reset as reset_command
+from dx.commands.dockerfile.command import run as run_dockerfile_command
 
 app = typer.Typer()
 
@@ -60,3 +61,8 @@ def rm(all: bool = typer.Option(False, "--all", help="Remove all containers")):
 def reset():
     """Stop and remove all containers"""
     reset_command()
+
+@app.command()
+def dockerfile():
+    """Run the Dockerfile command"""
+    run_dockerfile_command()
