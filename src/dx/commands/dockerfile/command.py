@@ -24,6 +24,26 @@ DOCKERFILE_DEFAULTS = {
 def run(image: str = None):
     print_header("Dockerfile Builder")
 
+    # Guard: require supported image
+    if not image:
+        print("❌ You must provide an image.")
+        print("\nExample:")
+        print("  dx dockerfile python\n")
+        print("Run 'dx supported' to see available images.\n")
+        return
+
+    if image not in DOCKERFILE_DEFAULTS:
+        print(f"❌ Unsupported image: {image}")
+        print("\nSupported images:")
+
+        for name in DOCKERFILE_DEFAULTS:
+            print(f"  - {name}")
+
+        print("\nExample:")
+        print(f"  dx dockerfile {list(DOCKERFILE_DEFAULTS.keys())[0]}\n")
+
+        return
+
     # Optional: show which defaults are used
     if image:
         print(f"Using defaults for: {image}\n")
