@@ -1,58 +1,40 @@
 from dx.ui.output import print_header, print_instruction
 from dx.ui.prompt import input_prompt
-
-
-DOCKERFILE_DEFAULTS = {
-    "python": {
-        "base": "python:3.11",
-        "workdir": "/app",
-        "cmd": "python app.py",
-    },
-    "node": {
-        "base": "node:18",
-        "workdir": "/app",
-        "cmd": "npm start",
-    },
-    "nginx": {
-        "base": "nginx:latest",
-        "workdir": None,
-        "cmd": None,
-    },
-}
+from dx.config.images import IMAGE_PROFILES
 
 
 def run(image: str = None):
     print_header("Dockerfile Builder")
 
-    # Guard: require supported image
+    # Guard: require image
     if not image:
-        print("❌ You must provide an image.")
-        print("\nExample:")
+        print("❌ You must provide an image.\n")
+        print("Example:")
         print("  dx dockerfile python\n")
         print("Run 'dx supported' to see available images.\n")
         return
 
-    if image not in DOCKERFILE_DEFAULTS:
-        print(f"❌ Unsupported image: {image}")
-        print("\nSupported images:")
+    # Guard: supported images
+    if image not in IMAGE_PROFILES:
+        print(f"❌ Unsupported image: {image}\n")
+        print("Supported images:")
 
-        for name in DOCKERFILE_DEFAULTS:
+        for name in IMAGE_PROFILES:
             print(f"  - {name}")
 
         print("\nExample:")
-        print(f"  dx dockerfile {list(DOCKERFILE_DEFAULTS.keys())[0]}\n")
-
+        print("  dx dockerfile python\n")
         return
 
-    # Optional: show which defaults are used
-    if image:
-        print(f"Using defaults for: {image}\n")
+    print(f"Using defaults for: {image}\n")
 
-    defaults = DOCKERFILE_DEFAULTS.get(image, {})
+    # Get profile
+    profile = IMAGE_PROFILES.get(image, {})
+    dockerfile_defaults = profile.get("dockerfile", {})
 
-    default_base = defaults.get("base", "python:3.11")
-    default_workdir = defaults.get("workdir", "/app")
-    default_cmd = defaults.get("cmd", "python app.py")
+    default_base = dockerfile_defaults.get("base", "python:3.11")
+    default_workdir = dockerfile_defaults.get("workdir")
+    default_cmd = dockerfile_defaults.get("cmd")
 
     dockerfile_lines = []
 
@@ -107,7 +89,7 @@ so your code is available inside the container
     if default_cmd:
         cmd = input_prompt(
             "Command to run (e.g. python app.py)",
-            default=default_cmd
+            default=default_cmd,
         )
 
         cmd_parts = cmd.split() if cmd else default_cmd.split()
@@ -133,5 +115,4 @@ when the container starts
         print(line)
 
     print("\n" + "-" * 60)
-
     print("\n👉 Copy this into a file named 'Dockerfile'\n")
