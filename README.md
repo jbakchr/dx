@@ -1,22 +1,20 @@
 # 🐳 dx
 
-**Learn Docker by using it — not memorizing it**
-
+**Learn Docker by using it — not memorizing it**  
 A small CLI that helps you learn Docker through real usage.
 
 ---
 
 ## 🧠 What is this?
 
-dx is a CLI that sits on top of Docker.
-
+dx is a CLI that sits on top of Docker.  
 But unlike most tools, it does **not hide Docker**.
 
 Instead, it helps you:
 
-- use Docker without friction ✅  
-- understand what you're doing ✅  
-- gradually learn the real Docker CLI ✅  
+- use Docker without friction ✅
+- understand what you're doing ✅
+- gradually learn the real Docker CLI ✅
 
 ---
 
@@ -63,8 +61,6 @@ Which gives you:
 
 ```
 
-Generated command:
-
 👉  docker run -d -p 8080:80 --name web nginx
 
 ```
@@ -73,19 +69,19 @@ With explanation:
 
 ```
 
--d        → run in background  
-so your terminal stays free and non-blocked
+-d        → run in background
+so your terminal stays free
 
--p        → map port 8080 → 80  
-so you can access the service from your machine
+-p        → map port 8080 → 80
+so you can access it locally
 
-\--name    → name container "web"  
+\--name    → name container "web"
 so you can reference it later
 
 ```
 
 👉 You always see the real Docker command  
-👉 You always understand what it does  
+👉 You always understand what it does
 
 ---
 
@@ -100,13 +96,58 @@ dx run → experiment → dx reset → repeat
 ```
 
 Each time you:
-- answer prompts  
-- see the Docker command  
-- understand the flags  
-- run it  
-- observe the result  
+
+- answer prompts
+- see the command
+- understand the flags
+- run it
+- observe the result
 
 👉 Over time, you stop needing dx
+
+---
+
+## 🧩 New: Build your own Dockerfiles
+
+dx now also helps you learn how to **build images**, not just run them.
+
+```
+
+dx dockerfile python
+
+```
+
+Guided flow:
+
+```
+
+? Base image (python:3.11) →
+👉  FROM python:3.11
+
+? Working directory (/app) →
+👉  WORKDIR /app
+
+? Copy files? →
+👉  COPY . .
+
+? Command? →
+👉  CMD \["python", "app.py"]
+
+```
+
+Final result:
+
+```
+
+FROM python:3.11
+WORKDIR /app
+COPY . .
+CMD \["python", "app.py"]
+
+```
+
+👉 You learn Dockerfile syntax through repetition  
+👉 No need to go back to docs
 
 ---
 
@@ -114,7 +155,7 @@ Each time you:
 
 ### 🔹 dx run
 
-Run a container with guided prompts.
+Run a container with guided prompts:
 
 ```
 
@@ -127,11 +168,25 @@ If the image is unsupported:
 ```
 
 dx run foo
-
 Unknown image: foo
 Tip: run `dx supported`
 
 ```
+
+---
+
+### 🔹 dx dockerfile
+
+Build a Dockerfile step-by-step:
+
+```
+
+dx dockerfile python
+
+```
+
+👉 Requires a supported image  
+👉 Uses image-specific defaults
 
 ---
 
@@ -141,12 +196,12 @@ Show supported images:
 
 ```
 
-nginx     → web server (ports)
-postgres  → database (ports + env)
-mysql     → database (ports + env)
-redis     → cache (ports)
-node      → development (volume)
-python    → development (volume + command)
+nginx      → web server (ports) \[dockerfile]
+postgres   → database (ports + env) \[dockerfile]
+mysql      → database (ports + env) \[dockerfile]
+redis      → cache (ports) \[dockerfile]
+node       → development (volume) \[dockerfile]
+python     → development (volume + command) \[dockerfile]
 
 ```
 
@@ -159,7 +214,6 @@ Stop all running containers:
 ```
 
 docker stop $(docker ps -q)
-→ stop all running containers
 
 ```
 
@@ -172,7 +226,6 @@ Remove all containers:
 ```
 
 docker rm $(docker ps -a -q)
-→ remove all containers
 
 ```
 
@@ -180,7 +233,7 @@ docker rm $(docker ps -a -q)
 
 ### 🔹 dx reset
 
-Reset your environment (fresh start):
+Reset your environment:
 
 ```
 
@@ -190,55 +243,63 @@ docker rm $(docker ps -a -q)
 ```
 
 👉 Combines stop + remove  
-👉 Shows real commands  
-👉 Encourages repetition  
+👉 Enables repetition
 
 ---
 
-## 🧩 Supported concepts
+## 🧠 Core concept
 
-dx teaches core Docker usage:
+The most important idea in dx:
+
+```
+
+IMAGE PROFILES
+
+```
+
+Example:
+
+```
+
+nginx  → ports
+python → volume + command
+postgres → ports + env
+
+```
+
+Used for:
+
+- prompting ✅
+- defaults ✅
+- learning context ✅
+- Dockerfile generation ✅
+
+👉 One system → multiple learning paths
+
+---
+
+## 🧠 Supported concepts
 
 ### Container lifecycle
-- docker run  
-- docker stop  
-- docker rm  
+
+- docker run
+- docker stop
+- docker rm
+
+### Dockerfile basics
+
+- FROM
+- WORKDIR
+- COPY
+- CMD
 
 ### Flags
-- `-d` → run in background  
-- `-p` → map ports  
-- `-e` → environment variables  
-- `-v` → mount files  
-- `-w` → working directory  
 
----
-
-## 🧠 Image-aware prompts
-
-dx adapts based on the image:
-
-- nginx → ports  
-- postgres → ports + env  
-- python → volume + command  
-
-### Example
-
-```
-
-dx run python
-
-```
-```
-
-? Mount current directory? (Y/n)
-? Python file to run → app.py
-
-```
-```
-
-👉  docker run -v $(pwd):/app -w /app python python app.py
-
-```
+- -d → run in background
+- -p → ports
+- -e → env variables
+- -v → volume
+- -w → working directory
 
 ---
 
@@ -277,13 +338,13 @@ Because:
 
 This is NOT:
 
-- a Docker replacement  
-- a production tool  
-- a full abstraction layer  
+- a Docker replacement
+- a production tool
+- a full abstraction layer
 
 This IS:
 
-✅ a learning-first CLI  
+✅ a learning-first CLI
 
 Designed to take you from:
 
@@ -310,9 +371,7 @@ src/
 ├── cli.py
 ├── commands/
 │   ├── run/
-│   │   ├── run.py
-│   │   ├── exec.py
-│   │   └── prompts.py
+│   ├── dockerfile/
 │   ├── stop.py
 │   ├── rm.py
 │   ├── reset.py
@@ -326,26 +385,31 @@ src/
 ```
 
 👉 Structure follows complexity  
-👉 Learning stays the focus  
+👉 IMAGE_PROFILES powers everything
 
 ---
 
 ## 🧠 Why this exists
 
-Docker isn’t hard because of concepts.
-
+Docker isn’t hard because of concepts.  
 It’s hard because:
-- remembering syntax  
-- remembering flags  
-- remembering combinations  
 
-dx helps you build that **through repetition**.
+- remembering syntax
+- remembering flags
+- remembering combinations
+
+dx solves this through:
+
+👉 repetition  
+👉 guided usage  
+👉 real commands
 
 ---
 
 ## 🔧 Installation
 
 ### Requirements
+
 - Python 3.10+
 - Docker installed and running
 
