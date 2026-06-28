@@ -1,10 +1,13 @@
 # src/dx/commands/supported.py
 
 from dx.config.images import IMAGE_PROFILES
+from dx.ui.output import separator
 
 
 def supported():
-    print("Supported images:\n")
+    separator()
+    print("Supported images")
+    separator()
 
     for name, profile in IMAGE_PROFILES.items():
         description = profile.get("description", "")
@@ -20,6 +23,8 @@ def supported():
         marker = " [dockerfile]" if has_dockerfile else ""
 
         if description:
-            print(f"{name:<10} → {description}{marker}")
+            print(f"  {name:<10} → {description}{marker}")
         else:
-            print(f"{name}{marker}")
+            print(f"  {name}{marker}")
+    
+    print()
