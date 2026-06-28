@@ -72,8 +72,7 @@ def execution_header():
 
 
 def execution_done():
-    print("\n📦 Container ID (from Docker output above)")
-    print("\n✅ Container started (see Docker output above)")
+    print("\n✅ Container started — ID shown in Docker output above")
 
 
 def print_header(title: str):
