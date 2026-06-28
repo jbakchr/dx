@@ -28,7 +28,7 @@ Commands:
   dockerfile  Run the Dockerfile command
   supported   Show supported images
 
-  Tip:
+Tip:
   Use "dx --help" for more details
 """
         )
