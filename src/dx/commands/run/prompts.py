@@ -10,7 +10,7 @@ def handle_port(profile):
 
     if "container_port" in profile.get("prompts", []):
         default = profile.get("container_port", "")
-        value = input(f"? Container port (default: {default}) → ").strip()
+        value = input(f"? Container port? (default: {default}) → ").strip()
         container_port = value if value else str(default)
     else:
         container_port = str(profile.get("container_port"))
