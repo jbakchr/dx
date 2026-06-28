@@ -1,8 +1,8 @@
 # src/dx/commands/run.py
 
-from dx.ui.prompt import ask_detached, ask_name, confirm_run
+from dx.ui.prompt import ask_name, confirm_run
 from dx.ui.output import separator, show_command, explain, show_run_header
-from dx.commands.run.prompts import collect_inputs
+from dx.commands.run.prompts import collect_image_inputs, collect_common_inputs
 from dx.commands.run.exec import execute
 
 from dx.config.images import IMAGE_PROFILES
@@ -62,10 +62,10 @@ def run(image: str):
     show_run_header()
 
     # ---- prompts ----
-    host_port, container_port, env_vars, volume, command = collect_inputs(profile)
+    host_port, container_port, detached = collect_common_inputs(profile)
 
-    # always ask these
-    detached = ask_detached()
+    env_vars, volume, command = collect_image_inputs(profile)
+
     name = ask_name()
 
     # ---- build ----

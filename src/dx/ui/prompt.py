@@ -11,7 +11,7 @@ def ask_detached():
 
 
 def ask_name():
-    return input("? Name container? → ").strip()
+    return input("\n? Name container? → ").strip()
 
 
 def confirm_run():

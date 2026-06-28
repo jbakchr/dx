@@ -1,4 +1,4 @@
-from dx.ui.prompt import ask_port
+from dx.ui.prompt import ask_port, ask_detached
 
 
 def handle_port(profile):
@@ -48,17 +48,28 @@ def handle_command():
 
     return f"python {cmd}"
 
-def collect_inputs(profile):
+
+def collect_common_inputs(profile):
     host_port = None
     container_port = None
-    env_vars = {}
-    volume = None
-    command = None
+    detached = False
 
     prompts = profile.get("prompts", [])
 
     if "port" in prompts:
         host_port, container_port = handle_port(profile)
+
+    detached = ask_detached()
+
+    return host_port, container_port, detached
+
+
+def collect_image_inputs(profile):
+    env_vars = {}
+    volume = None
+    command = None
+
+    prompts = profile.get("prompts", [])
 
     if "env" in prompts:
         env_vars = handle_env(profile)
@@ -69,4 +80,6 @@ def collect_inputs(profile):
     if "command" in prompts:
         command = handle_command()
 
-    return host_port, container_port, env_vars, volume, command
+    return env_vars, volume, command
+
+
