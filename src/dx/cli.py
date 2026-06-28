@@ -25,6 +25,7 @@ Commands:
   stop        Stop containers
   rm          Remove containers
   reset       Stop and remove all containers
+  dockerfile  Run the Dockerfile command
   supported   Show supported images
 
   Tip:
