@@ -35,9 +35,15 @@ def handle_volume():
     choice = input("? Mount current directory? (Y/n) → ").strip().lower()
 
     if choice == "n":
-        return None
+        return None, None
 
-    return "$(pwd):/app"
+    volume = "$(pwd):/app"
+
+    workdir = input("? Container working directory? (default: /app) → ").strip()
+    workdir = workdir if workdir else "/app"
+
+    return volume, workdir
+
 
 
 def handle_command():
@@ -75,11 +81,11 @@ def collect_image_inputs(profile):
         env_vars = handle_env(profile)
 
     if "volume" in prompts:
-        volume = handle_volume()
+        volume, workdir = handle_volume()
 
     if "command" in prompts:
         command = handle_command()
 
-    return env_vars, volume, command
+    return env_vars, volume, workdir, command
 
 

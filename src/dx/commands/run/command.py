@@ -17,7 +17,7 @@ def get_profile(image_name: str):
 
 
 
-def build_command(image, detached, host_port, container_port, name, env_vars, volume, command):
+def build_command(image, detached, host_port, container_port, name, env_vars, volume, workdir, command):
     parts = ["docker", "run"]
 
     if detached:
@@ -31,7 +31,9 @@ def build_command(image, detached, host_port, container_port, name, env_vars, vo
     
     if volume:
         parts.extend(["-v", volume])
-        parts.extend(["-w", "/app"])
+
+    if workdir:
+        parts.extend(["-w", workdir])
 
     if name:
         parts.extend(["--name", name])
@@ -64,7 +66,7 @@ def run(image: str):
     # ---- prompts ----
     host_port, container_port, detached = collect_common_inputs(profile)
 
-    env_vars, volume, command = collect_image_inputs(profile)
+    env_vars, volume, workdir, command = collect_image_inputs(profile)
 
     name = ask_name()
 
@@ -77,6 +79,7 @@ def run(image: str):
         name=name,
         env_vars=env_vars,
         volume=volume,
+        workdir=workdir,
         command=command
     )
 
