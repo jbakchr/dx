@@ -1,6 +1,6 @@
 # 🐳 dx — Roadmap
 
-Build dx slowly.
+Build dx slowly.  
 Each step should be small, useful, and testable.
 
 ---
@@ -12,34 +12,37 @@ Each step should be small, useful, and testable.
 - Prefer working software over ideas
 
 Each phase should feel like:
+
 → "Ahh… this is already useful"
 
 ---
 
 ## ✅ CURRENT STATE (IMPORTANT)
 
-dx is now a **learning-first Docker system** with a **complete, repeatable workflow**.
+dx is now a **learning-first Docker system**  
+with a **complete, repeatable workflow**.
 
 ---
 
 ### ✅ Core capabilities
 
-- ✅ Installable CLI (pip install -e .)
+- ✅ Installable CLI (`pip install -e .`)
 - ✅ dx run
 - ✅ dx dockerfile
 - ✅ dx stop --all
 - ✅ dx rm --all
 - ✅ dx reset
+
 - ✅ Interactive prompts
 - ✅ Real Docker execution
 - ✅ Command generation + explanation (with “why”)
-- ✅ Image-aware behavior via IMAGE_PROFILES
+- ✅ Image-aware behavior via `IMAGE_PROFILES`
 - ✅ Guardrails for unsupported images
-- ✅ Discoverability via dx supported
+- ✅ Discoverability via `dx supported`
 
 ---
 
-## ✅ Learning model (important)
+## ✅ Learning model
 
 dx teaches Docker across **two connected layers**:
 
@@ -53,8 +56,7 @@ dx teaches Docker across **two connected layers**:
 - ✅ CMD → default command
 - ✅ Image-aware defaults
 
-👉 Guided construction through repetition  
-👉 No need to revisit docs
+👉 Guided construction through repetition
 
 ---
 
@@ -72,19 +74,7 @@ dx teaches Docker across **two connected layers**:
 
 ---
 
-### 🔹 Stop
-
-- ✅ docker stop $(docker ps -q)
-
----
-
-### 🔹 Remove
-
-- ✅ docker rm $(docker ps -a -q)
-
----
-
-### 🔹 Reset (core loop)
+### 🔹 Reset loop (core mechanic)
 
 ```
 
@@ -92,11 +82,11 @@ dx run → experiment → dx reset → repeat
 
 ```
 
-👉 This loop is the **core learning mechanic**
+👉 This is the **core learning loop**
 
 ---
 
-### 🔹 Extended learning loop
+### 🔹 Extended loop
 
 ```
 
@@ -112,16 +102,28 @@ dx dockerfile → understand build
 
 ## ✅ UX (current experience)
 
-dx now provides a **tight, structured learning flow**:
+dx now provides a **tight, structured flow**:
 
-- ✅ Minimal header (single-line context)
+- ✅ Minimal header (single line)
 - ✅ Consistent prompt structure:
-  - global → image-specific → name
+
+```
+
+GLOBAL → IMAGE → NAME
+
+```
+
 - ✅ Clear focus on real syntax:
-  👉 docker run ...
-  👉 FROM python:3.11
+
+```
+
+👉 docker run ...
+👉 FROM python:3.11
+
+```
+
 - ✅ Layered explanations (short + why)
-- ✅ Only relevant flags are shown
+- ✅ Only relevant flags shown
 - ✅ Real Docker output always visible
 - ✅ Clean execution feedback
 
@@ -129,17 +131,17 @@ dx now provides a **tight, structured learning flow**:
 
 ---
 
-## ✅ Prompt structure (important)
+## ✅ Prompt model (important)
 
-dx now follows a **consistent mental model**:
+All flows follow:
 
 ```
 
-\[GLOBAL DOCKER FLAGS]
+\[GLOBAL]
 → ports (-p)
 → detached (-d)
 
-\[IMAGE-SPECIFIC CONFIG]
+\[IMAGE]
 → env (-e)
 → volume (-v)
 → working directory (-w)
@@ -150,18 +152,18 @@ dx now follows a **consistent mental model**:
 
 ```
 
-👉 Same entry pattern for all images
-👉 Builds strong repetition + pattern recognition
+👉 Same structure across all images  
+👉 Builds pattern recognition through repetition
 
 ---
 
-## ✅ Core system (important)
+## ✅ Core system
 
 The central concept in dx:
 
 ```
 
-IMAGE_PROFILES
+IMAGE\_PROFILES
 
 ```
 
@@ -176,8 +178,8 @@ Example:
 
 ```
 
-nginx → ports
-python → volume + command + working directory
+nginx    → ports
+python   → volume + command + working directory
 postgres → ports + env
 
 ```
@@ -212,13 +214,13 @@ build → run → stop → remove → reset → repeat
 
 ```
 
-👉 A complete, repeatable learning workflow
+👉 A complete learning workflow
 
 ---
 
 ## 🎯 CURRENT FOCUS
 
-dx is now in:
+dx is in:
 
 👉 **polish + friction reduction phase**
 
@@ -226,15 +228,16 @@ NOT a feature-building phase.
 
 ---
 
-## ⚡ Phase — Friction reduction (highest value)
+## ⚡ Friction reduction (highest priority)
 
 Goal:
+
 → Make repeated usage feel effortless
 
 Focus:
 
 - Reduce prompt friction
-- Improve defaults (IMAGE_PROFILES-driven)
+- Improve defaults (`IMAGE_PROFILES`)
 - Remove unnecessary prompts
 - Keep flow fast and obvious
 
@@ -242,7 +245,7 @@ Rule:
 
 If something:
 
-- slows you down
+- slows usage
 - feels repetitive
 - breaks flow
 
@@ -250,16 +253,17 @@ If something:
 
 ---
 
-## ⚡ Phase — Prompt UX tightening
+## ⚡ Prompt UX tightening
 
 Goal:
+
 → Make prompts feel natural and predictable
 
-Current direction:
+Current state:
 
-- ✅ Consistent prompt order across images
-- ✅ Clear dependencies (e.g. -v → -w)
-- ✅ Minimal branching in flows
+- ✅ Consistent ordering
+- ✅ Clear dependencies (`-v → -w`)
+- ✅ Minimal branching
 
 Next:
 
@@ -269,41 +273,43 @@ Next:
 
 ---
 
-## ⚡ Phase — Micro learning improvements
+## ⚡ Micro learning improvements
 
 Goal:
-→ Increase understanding without adding complexity
+
+→ Improve understanding without adding complexity
 
 Focus:
 
 - Improve explanation wording
-- Strengthen "why" clarity
-- Show relationships (e.g. -v ↔ -w)
+- Strengthen “why”
+- Show relationships (e.g. `-v ↔ -w`)
 
 Rule:
 
-- Keep explanations short
-- Keep explanations practical
-- No “teaching mode”
+- keep it short
+- keep it practical
+- no “teaching mode”
 
 ---
 
-## ⚡ Phase — Workflow alignment
+## ⚡ Workflow alignment
 
 Goal:
-→ Make dx feel like a natural part of Docker usage
 
-Ideas:
+→ Make dx feel like a natural extension of Docker
 
-- Smarter defaults
-- Reduce repetition
-- Improve flow transitions
+Focus:
+
+- smarter defaults
+- reduced repetition
+- smoother flow
 
 Success:
 
 ```
 
-dx feels like a natural extension of Docker
+dx feels like normal Docker usage
 
 ```
 
@@ -321,17 +327,17 @@ Not priorities:
 
 👉 Only revisit if:
 
-- dx remains simple
+- dx stays simple
 - real need appears
 
 ---
 
-## ⚠️ Things to AVOID (very important)
+## ⚠️ Things to avoid
 
-- ❌ Becoming a full Docker abstraction layer
+- ❌ Becoming a full Docker abstraction
 - ❌ Mirroring the full Docker CLI
 - ❌ Supporting everything
-- ❌ Adding complex config systems
+- ❌ Complex config systems
 - ❌ Hiding real Docker commands
 
 👉 Simplicity is the product
@@ -351,8 +357,6 @@ If something feels:
 ---
 
 ## 🏁 Definition of success
-
-You move from:
 
 ```
 
