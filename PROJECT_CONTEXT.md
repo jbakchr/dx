@@ -76,7 +76,7 @@ What happens:
 ```
 
 dx run <image>
-→ answer prompts
+→ answer prompts (structured flow)
 → see generated command
 → understand flags
 → run real Docker
@@ -160,7 +160,7 @@ dx currently supports:
 
 The experience is structured to reinforce learning:
 
-- ✅ Context header before flows
+- ✅ Minimal context header (single-line)
 - ✅ Clear focus on real syntax:
 
 ```
@@ -170,42 +170,36 @@ The experience is structured to reinforce learning:
 
 ```
 
+- ✅ Consistent prompt structure:
+
+```
+
+GLOBAL → IMAGE-SPECIFIC → NAME
+
+```
+
 - ✅ Layered explanations:
 
 ```
 
 -d → run in background
-so your terminal stays free
+(so your terminal stays free)
+
+```
+
+- ✅ Relationship-based explanations:
+
+```
+
+-v → mount files
+-w → run commands where files are mounted
 
 ```
 
 - ✅ Real Docker output is always visible
+- ✅ Clean execution feedback
 
 👉 UX is part of the learning system
-
----
-
-## 🏗️ Current architecture (important)
-
-CLI (Typer)  
-→ commands/run/  
-→ commands/dockerfile/  
-→ commands/stop.py  
-→ commands/rm.py  
-→ commands/reset.py  
-→ commands/supported.py  
-→ ui/prompt.py (input)  
-→ ui/output.py (display + explanation)  
-→ config/images.py (IMAGE_PROFILES)  
-→ subprocess (Docker CLI)
-
-### Principles:
-
-- CLI stays simple and predictable
-- Commands remain flat (no deep nesting)
-- UI logic is separate from command logic
-- Image-specific behavior lives in config
-- Docker is always visible (never hidden)
 
 ---
 
@@ -223,9 +217,9 @@ Example:
 
 ```
 
-nginx  → ports
+nginx    → ports
 postgres → env variables
-python → volume + command + dockerfile defaults
+python   → volume + command + working directory
 
 ```
 
@@ -240,6 +234,32 @@ IMAGE_PROFILES powers:
 
 ---
 
+## 🧠 Core learning model (important)
+
+dx now follows a **consistent command-building structure**:
+
+```
+
+\[GLOBAL DOCKER FLAGS]
+→ ports (-p)
+→ detached (-d)
+
+\[IMAGE-SPECIFIC]
+→ env (-e)
+→ volume (-v)
+→ working directory (-w)
+→ command
+
+\[METADATA]
+→ name (--name)
+
+```
+
+👉 This structure is repeated across images  
+👉 Builds strong pattern recognition
+
+---
+
 ## 🔍 Key insights so far
 
 - ✅ Seeing the real syntax is critical for learning
@@ -251,6 +271,8 @@ IMAGE_PROFILES powers:
 - ✅ Repetition builds intuition
 - ✅ Build + run together deepen understanding
 - ✅ UX structure directly impacts learning
+- ✅ Consistency across flows improves pattern recognition
+- ✅ Showing relationships between flags improves understanding
 
 ---
 
@@ -299,6 +321,7 @@ build → run → stop → remove → reset → repeat
 
 - Refine explanations slightly
 - Improve “why” statements
+- Strengthen relationships between flags (e.g. -v ↔ -w)
 - Keep explanations:
   - short
   - practical
@@ -406,9 +429,11 @@ When starting a new chat, say:
 ```
 
 I’m working on this project:
-\[paste PROJECT\_CONTEXT.md]
+
+[paste PROJECT_CONTEXT.md]
 
 I want help evolving it step-by-step without overengineering.
-Let’s start with \[X]
+
+Let’s start with [X]
 
 ```
