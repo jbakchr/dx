@@ -3,8 +3,7 @@
 
 def show_run_header() -> None:
     separator()
-    print("You're about to run a real Docker container.\n")
-    print("Answer a few prompts to build the command step by step.")
+    print("Build a real Docker run command step by step.")
     separator()
 
 
