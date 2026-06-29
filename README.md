@@ -112,7 +112,7 @@ dx run nginx
 dx dockerfile python
 ```
 
-Flow:
+Example flow:
 
 ```
 ? Base image (python:3.11) →
@@ -128,8 +128,7 @@ Flow:
 👉  CMD ["python", "app.py"]
 ```
 
-👉 You learn Dockerfile syntax through repetition  
-👉 No need to go back to docs
+👉 Learn Dockerfile syntax through repetition
 
 ---
 
@@ -163,7 +162,7 @@ Explanation:
              (so commands run where your files are mounted)
 ```
 
-👉 You learn how `-v` and `-w` work together
+👉 Learn how `-v` and `-w` work together
 
 ---
 
@@ -177,10 +176,9 @@ Run a container with guided prompts:
 dx run nginx
 ```
 
-If the image is unsupported:
+If unsupported:
 
 ```
-dx run foo
 ❌ Unknown image: foo
 💡 Tip: run `dx supported`
 ```
@@ -195,14 +193,9 @@ Build a Dockerfile step by step:
 dx dockerfile python
 ```
 
-👉 Requires a supported image  
-👉 Uses image-specific defaults
-
 ---
 
 ### 🔹 dx supported
-
-Show supported images:
 
 ```
 nginx      → web server (ports)
@@ -215,43 +208,18 @@ python     → development (volume + command)
 
 ---
 
-### 🔹 dx stop --all
-
-Stop all running containers:
-
-```bash
-docker stop $(docker ps -q)
-```
-
----
-
-### 🔹 dx rm --all
-
-Remove all containers:
-
-```bash
-docker rm $(docker ps -a -q)
-```
-
----
-
 ### 🔹 dx reset
 
-Reset your environment:
-
 ```bash
 docker stop $(docker ps -q)
 docker rm $(docker ps -a -q)
 ```
 
-👉 Combines stop + remove  
 👉 Enables repetition
 
 ---
 
 ## 🧠 Core concept
-
-The most important idea in dx:
 
 ```
 IMAGE_PROFILES
@@ -260,44 +228,17 @@ IMAGE_PROFILES
 Example:
 
 ```
-nginx   → ports
-python  → volume + command
-postgres → ports + env
+nginx     → ports
+python    → volume + command
+postgres  → ports + env
 ```
 
-Used for:
+👉 One system powers:
 
-- prompting ✅
-- defaults ✅
-- learning context ✅
-- Dockerfile generation ✅
-
-👉 One system → multiple learning paths
-
----
-
-## 🧠 Supported concepts
-
-### Container lifecycle
-
-- docker run
-- docker stop
-- docker rm
-
-### Dockerfile basics
-
-- FROM
-- WORKDIR
-- COPY
-- CMD
-
-### Flags
-
-- -d → run in background
-- -p → ports
-- -e → env variables
-- -v → volume
-- -w → working directory
+- prompts
+- defaults
+- explanations
+- Dockerfile generation
 
 ---
 
@@ -305,7 +246,7 @@ Used for:
 
 dx does NOT simulate anything.
 
-It runs the real Docker command and shows real output:
+It runs:
 
 ```
 --- Docker output ---
@@ -356,24 +297,15 @@ Designed to take you from:
 
 ---
 
-## 🏗️ Architecture (simple by design)
+## 🏗️ Architecture
 
 ```
 src/
 └── dx/
     ├── cli.py
     ├── commands/
-    │   ├── run/
-    │   ├── dockerfile/
-    │   ├── stop.py
-    │   ├── rm.py
-    │   ├── reset.py
-    │   └── supported.py
     ├── config/
-    │   └── images.py
     └── ui/
-        ├── output.py
-        └── prompt.py
 ```
 
 👉 Flat structure  
@@ -381,21 +313,14 @@ src/
 
 ---
 
-## 🧠 Why this exists
+## 📚 Documentation
 
-Docker isn’t hard because of concepts.
+See the `docs/` folder for:
 
-It’s hard because:
-
-- remembering syntax
-- remembering flags
-- remembering combinations
-
-dx solves this through:
-
-👉 repetition  
-👉 guided usage  
-👉 real commands
+- project context
+- roadmap
+- design principles
+- prompt and output guidelines
 
 ---
 
