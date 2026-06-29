@@ -1,15 +1,16 @@
 # 🐳 dx
 
-**Learn Docker by using it — not memorizing it**  
+**Learn Docker by using it — not memorizing it**
+
 A small CLI that helps you learn Docker through real usage.
 
 ---
 
 ## 🧠 What is this?
 
-dx is a CLI that sits on top of Docker.  
-But unlike most tools, it does **not hide Docker**.
+dx is a CLI that sits on top of Docker.
 
+But unlike most tools, it does **not hide Docker**.  
 Instead, it helps you:
 
 - use Docker without friction ✅
@@ -20,10 +21,10 @@ Instead, it helps you:
 
 ## 🎯 The goal
 
-Most tools do this:
+Most tools do this:  
 → hide complexity
 
-dx does something else:
+dx does something else:  
 → **reveal complexity — step by step**
 
 ---
@@ -32,52 +33,42 @@ dx does something else:
 
 Instead of writing:
 
-```
-
+```bash
 docker run -d -p 8080:80 --name web nginx
-
 ```
 
 You can do:
 
-```
-
+```bash
 dx run nginx
-
 ```
 
 And go through a guided flow:
 
 ```
-
-? Expose port? (default 8080)
-? Container port? (default 80)
+? Expose port? (default: 8080)
+? Container port? (default: 80)
 ? Run in background? (Y/n)
 ? Name container? → web
-
 ```
 
 Which gives you:
 
 ```
-
 👉  docker run -d -p 8080:80 --name web nginx
-
 ```
 
 With explanation:
 
 ```
+-d         → run in background
+             (so your terminal stays free)
 
--d        → run in background
-so your terminal stays free
+-p         → map port 8080 → 80
+             (so you can access it locally)
 
--p        → map port 8080 → 80
-so you can access it locally
-
-\--name    → name container "web"
-so you can reference it later
-
+--name     → name container "web"
+             (so you can reference it later)
 ```
 
 👉 You always see the real Docker command  
@@ -90,9 +81,7 @@ so you can reference it later
 dx is built around repetition:
 
 ```
-
 dx run → experiment → dx reset → repeat
-
 ```
 
 Each time you:
@@ -107,20 +96,25 @@ Each time you:
 
 ---
 
-## 🧩 New: Build your own Dockerfiles
+## 🧩 Build + Run
 
-dx now also helps you learn how to **build images**, not just run them.
+dx teaches both sides of Docker:
 
+### 🔹 Run containers
+
+```bash
+dx run nginx
 ```
 
+### 🔹 Build Dockerfiles
+
+```bash
 dx dockerfile python
-
 ```
 
-Guided flow:
+Flow:
 
 ```
-
 ? Base image (python:3.11) →
 👉  FROM python:3.11
 
@@ -131,23 +125,45 @@ Guided flow:
 👉  COPY . .
 
 ? Command? →
-👉  CMD \["python", "app.py"]
-
-```
-
-Final result:
-
-```
-
-FROM python:3.11
-WORKDIR /app
-COPY . .
-CMD \["python", "app.py"]
-
+👉  CMD ["python", "app.py"]
 ```
 
 👉 You learn Dockerfile syntax through repetition  
 👉 No need to go back to docs
+
+---
+
+## 🔹 Example: running code in a container
+
+```bash
+dx run python
+```
+
+```
+? Run in background? (Y/n)
+? Mount current directory? (Y/n)
+? Container working directory? (default: /app)
+? Python file to run (leave empty to skip)
+? Name container?
+```
+
+Result:
+
+```
+👉 docker run -d -v $(pwd):/app -w /app --name python python
+```
+
+Explanation:
+
+```
+-v         → mount current directory
+             (so your local files are available inside the container)
+
+-w         → set working directory to /app
+             (so commands run where your files are mounted)
+```
+
+👉 You learn how `-v` and `-w` work together
 
 ---
 
@@ -157,32 +173,26 @@ CMD \["python", "app.py"]
 
 Run a container with guided prompts:
 
-```
-
+```bash
 dx run nginx
-
 ```
 
 If the image is unsupported:
 
 ```
-
 dx run foo
-Unknown image: foo
-Tip: run `dx supported`
-
+❌ Unknown image: foo
+💡 Tip: run `dx supported`
 ```
 
 ---
 
 ### 🔹 dx dockerfile
 
-Build a Dockerfile step-by-step:
+Build a Dockerfile step by step:
 
-```
-
+```bash
 dx dockerfile python
-
 ```
 
 👉 Requires a supported image  
@@ -195,14 +205,12 @@ dx dockerfile python
 Show supported images:
 
 ```
-
-nginx      → web server (ports) \[dockerfile]
-postgres   → database (ports + env) \[dockerfile]
-mysql      → database (ports + env) \[dockerfile]
-redis      → cache (ports) \[dockerfile]
-node       → development (volume) \[dockerfile]
-python     → development (volume + command) \[dockerfile]
-
+nginx      → web server (ports)
+postgres   → database (ports + env)
+mysql      → database (ports + env)
+redis      → cache (ports)
+node       → development (volume)
+python     → development (volume + command)
 ```
 
 ---
@@ -211,10 +219,8 @@ python     → development (volume + command) \[dockerfile]
 
 Stop all running containers:
 
-```
-
+```bash
 docker stop $(docker ps -q)
-
 ```
 
 ---
@@ -223,10 +229,8 @@ docker stop $(docker ps -q)
 
 Remove all containers:
 
-```
-
+```bash
 docker rm $(docker ps -a -q)
-
 ```
 
 ---
@@ -235,11 +239,9 @@ docker rm $(docker ps -a -q)
 
 Reset your environment:
 
-```
-
+```bash
 docker stop $(docker ps -q)
 docker rm $(docker ps -a -q)
-
 ```
 
 👉 Combines stop + remove  
@@ -252,19 +254,15 @@ docker rm $(docker ps -a -q)
 The most important idea in dx:
 
 ```
-
-IMAGE PROFILES
-
+IMAGE_PROFILES
 ```
 
 Example:
 
 ```
-
-nginx  → ports
-python → volume + command
+nginx   → ports
+python  → volume + command
 postgres → ports + env
-
 ```
 
 Used for:
@@ -310,10 +308,10 @@ dx does NOT simulate anything.
 It runs the real Docker command and shows real output:
 
 ```
+--- Docker output ---
+<container id / logs>
 
-\--- Docker output ---
-\<container id / logs>
-
+✅ Container started — ID shown in Docker output above
 ```
 
 ---
@@ -322,10 +320,8 @@ It runs the real Docker command and shows real output:
 
 Always show:
 
-```
-
+```bash
 docker ...
-
 ```
 
 Because:
@@ -349,7 +345,6 @@ This IS:
 Designed to take you from:
 
 ```
-
 "I copy Docker commands"
 ↓
 "I recognize patterns"
@@ -357,7 +352,6 @@ Designed to take you from:
 "I understand what I’m doing"
 ↓
 "I can write them myself"
-
 ```
 
 ---
@@ -365,33 +359,32 @@ Designed to take you from:
 ## 🏗️ Architecture (simple by design)
 
 ```
-
 src/
 └── dx/
-├── cli.py
-├── commands/
-│   ├── run/
-│   ├── dockerfile/
-│   ├── stop.py
-│   ├── rm.py
-│   ├── reset.py
-│   └── supported.py
-├── config/
-│   └── images.py
-└── ui/
-├── output.py
-└── prompt.py
-
+    ├── cli.py
+    ├── commands/
+    │   ├── run/
+    │   ├── dockerfile/
+    │   ├── stop.py
+    │   ├── rm.py
+    │   ├── reset.py
+    │   └── supported.py
+    ├── config/
+    │   └── images.py
+    └── ui/
+        ├── output.py
+        └── prompt.py
 ```
 
-👉 Structure follows complexity  
-👉 IMAGE_PROFILES powers everything
+👉 Flat structure  
+👉 IMAGE_PROFILES drives behavior
 
 ---
 
 ## 🧠 Why this exists
 
-Docker isn’t hard because of concepts.  
+Docker isn’t hard because of concepts.
+
 It’s hard because:
 
 - remembering syntax
@@ -415,20 +408,16 @@ dx solves this through:
 
 ### Install
 
-```
-
+```bash
 git clone <https://github.com/dx.git>
 cd dx
 pip install -e .
-
 ```
 
 ### Verify
 
-```
-
+```bash
 dx --help
-
 ```
 
 ---
