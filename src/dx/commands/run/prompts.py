@@ -73,6 +73,7 @@ def collect_common_inputs(profile):
 def collect_image_inputs(profile):
     env_vars = {}
     volume = None
+    workdir = None   # ✅ ADD THIS
     command = None
 
     prompts = profile.get("prompts", [])
