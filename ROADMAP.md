@@ -1,6 +1,6 @@
 # 🐳 dx — Roadmap
 
-Build dx slowly.  
+Build dx slowly.
 Each step should be small, useful, and testable.
 
 ---
@@ -10,14 +10,15 @@ Each step should be small, useful, and testable.
 - Keep things minimal
 - Build only what is needed right now
 - Prefer working software over ideas
-- Each phase should feel like:
-  → "Ahh… this is already useful"
+
+Each phase should feel like:
+→ "Ahh… this is already useful"
 
 ---
 
 ## ✅ CURRENT STATE (IMPORTANT)
 
-dx is now a **learning-first Docker system** with a **complete learning loop**.
+dx is now a **learning-first Docker system** with a **complete, repeatable workflow**.
 
 ---
 
@@ -40,7 +41,7 @@ dx is now a **learning-first Docker system** with a **complete learning loop**.
 
 ## ✅ Learning model (important)
 
-dx now teaches Docker across **two levels**:
+dx teaches Docker across **two connected layers**:
 
 ---
 
@@ -65,7 +66,9 @@ dx now teaches Docker across **two levels**:
 - ✅ -e → environment variables
 - ✅ -v → volumes
 - ✅ -w → working directory
-- ✅ command execution
+- ✅ command execution (python)
+
+👉 Full command is always visible
 
 ---
 
@@ -97,7 +100,7 @@ dx run → experiment → dx reset → repeat
 
 ```
 
-dx dockerfile → build understanding
+dx dockerfile → understand build
 → dx run → experiment
 → dx reset → repeat
 
@@ -109,23 +112,46 @@ dx dockerfile → build understanding
 
 ## ✅ UX (current experience)
 
-dx now provides a **structured learning flow**:
+dx now provides a **tight, structured learning flow**:
 
-- ✅ Context headers before flows
-- ✅ Focused instruction display:
-
-```
-
-👉 docker run ...
-👉 FROM python:3.11
-
-```
-
+- ✅ Minimal header (single-line context)
+- ✅ Consistent prompt structure:
+  - global → image-specific → name
+- ✅ Clear focus on real syntax:
+  👉 docker run ...
+  👉 FROM python:3.11
 - ✅ Layered explanations (short + why)
-- ✅ Consistent, scannable output
+- ✅ Only relevant flags are shown
 - ✅ Real Docker output always visible
+- ✅ Clean execution feedback
 
-👉 UX reinforces learning at every step
+👉 UX is part of the learning system
+
+---
+
+## ✅ Prompt structure (important)
+
+dx now follows a **consistent mental model**:
+
+```
+
+\[GLOBAL DOCKER FLAGS]
+→ ports (-p)
+→ detached (-d)
+
+\[IMAGE-SPECIFIC CONFIG]
+→ env (-e)
+→ volume (-v)
+→ working directory (-w)
+→ command
+
+\[METADATA]
+→ name (--name)
+
+```
+
+👉 Same entry pattern for all images
+👉 Builds strong repetition + pattern recognition
 
 ---
 
@@ -135,7 +161,7 @@ The central concept in dx:
 
 ```
 
-IMAGE\_PROFILES
+IMAGE_PROFILES
 
 ```
 
@@ -150,13 +176,13 @@ Example:
 
 ```
 
-nginx  → ports
-python → volume + command + dockerfile defaults
-postgres → ports + env + dockerfile defaults
+nginx → ports
+python → volume + command + working directory
+postgres → ports + env
 
 ```
 
-👉 One system → multiple learning flows
+👉 One system → multiple learning paths
 
 ---
 
@@ -205,37 +231,41 @@ NOT a feature-building phase.
 Goal:
 → Make repeated usage feel effortless
 
-Focus areas:
+Focus:
 
 - Reduce prompt friction
-- Improve defaults
-- Avoid unnecessary questions
+- Improve defaults (IMAGE_PROFILES-driven)
+- Remove unnecessary prompts
 - Keep flow fast and obvious
 
 Rule:
+
 If something:
 
 - slows you down
 - feels repetitive
-- breaks flow  
-  → simplify it
+- breaks flow
+
+→ simplify it
 
 ---
 
 ## ⚡ Phase — Prompt UX tightening
 
 Goal:
-→ Make prompts feel natural and obvious
+→ Make prompts feel natural and predictable
 
-Ideas:
+Current direction:
+
+- ✅ Consistent prompt order across images
+- ✅ Clear dependencies (e.g. -v → -w)
+- ✅ Minimal branching in flows
+
+Next:
 
 - Improve wording clarity
-- Improve order of prompts
-- Remove unnecessary prompts
-
-Rule:
-If a prompt does not provide learning value  
-→ remove or simplify it
+- Improve defaults
+- Remove low-value prompts
 
 ---
 
@@ -244,17 +274,17 @@ If a prompt does not provide learning value
 Goal:
 → Increase understanding without adding complexity
 
-Ideas:
+Focus:
 
-- Slightly refine explanations
-- Improve “why this matters”
-- Keep explanations:
-  - short
-  - practical
-  - consistent
+- Improve explanation wording
+- Strengthen "why" clarity
+- Show relationships (e.g. -v ↔ -w)
 
 Rule:
-No long explanations. No teaching mode.
+
+- Keep explanations short
+- Keep explanations practical
+- No “teaching mode”
 
 ---
 
@@ -266,12 +296,16 @@ Goal:
 Ideas:
 
 - Smarter defaults
-- Lightweight helpers
 - Reduce repetition
+- Improve flow transitions
 
 Success:
-dx feels like:
-→ a natural extension of Docker usage
+
+```
+
+dx feels like a natural extension of Docker
+
+```
 
 ---
 
@@ -281,14 +315,14 @@ Not priorities:
 
 - dx explain
 - dry-run mode
-- dx learn (pattern training)
+- dx learn
 - recipes / presets
-- Docker build integration
+- advanced Docker features
 
 👉 Only revisit if:
 
 - dx remains simple
-- and real need appears
+- real need appears
 
 ---
 
@@ -310,8 +344,9 @@ If something feels:
 
 - too complex
 - too abstract
-- too big  
-  → skip it
+- too big
+
+→ skip it
 
 ---
 
