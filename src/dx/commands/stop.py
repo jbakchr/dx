@@ -3,7 +3,21 @@
 import subprocess
 
 
-def stop(all: bool = False):
+def stop(all: bool = False) -> None:
+    """
+    Stop running Docker containers.
+
+    Currently, only the ``--all`` option is supported. When enabled,
+    the user is shown the generated Docker command and asked for
+    confirmation before execution.
+
+    Args:
+        all: Whether to stop all running containers.
+
+    Returns:
+        None.
+    """
+
     if not all:
         print("\nOnly `--all` is supported for now.\n")
         return
