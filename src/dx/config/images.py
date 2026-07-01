@@ -10,6 +10,17 @@ IMAGE_PROFILES = {
             "cmd": None,
         },
     },
+    "redis": {
+        "container_port": 6379,
+        "default_host_port": 6379,
+        "prompts": ["port", "container_port"],
+        "description": "cache (ports)",
+        "dockerfile": {
+            "base": "redis:latest",
+            "workdir": None,
+            "cmd": None,
+        },
+    },
     "postgres": {
         "container_port": 5432,
         "default_host_port": 5432,
@@ -20,17 +31,6 @@ IMAGE_PROFILES = {
         },
         "dockerfile": {
             "base": "postgres:15",
-            "workdir": None,
-            "cmd": None,
-        },
-    },
-    "redis": {
-        "container_port": 6379,
-        "default_host_port": 6379,
-        "prompts": ["port", "container_port"],
-        "description": "cache (ports)",
-        "dockerfile": {
-            "base": "redis:latest",
             "workdir": None,
             "cmd": None,
         },
