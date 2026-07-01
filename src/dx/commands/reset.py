@@ -3,7 +3,18 @@
 import subprocess
 
 
-def reset():
+def reset() -> None:
+    """
+    Reset Docker container state.
+
+    Stops all running containers and then removes all containers.
+    The generated Docker commands are displayed and must be
+    confirmed before execution.
+
+    Returns:
+        None.
+    """
+
     print()
     print("♻️ Resetting container state:\n")
 
