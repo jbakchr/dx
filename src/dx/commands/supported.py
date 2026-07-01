@@ -12,19 +12,27 @@ def supported():
     for name, profile in IMAGE_PROFILES.items():
         description = profile.get("description", "")
 
-        # Check if dockerfile support exists
+        purpose = description
+        concepts = ""
+
+        if "(" in description and ")" in description:
+            purpose = description.split("(")[0].strip()
+            concepts = description.split("(")[1].replace(")", "").strip()
+
         dockerfile_defaults = profile.get("dockerfile")
-        has_dockerfile = bool(dockerfile_defaults and (
-            dockerfile_defaults.get("base") or
-            dockerfile_defaults.get("workdir") or
-            dockerfile_defaults.get("cmd")
-        ))
+        has_dockerfile = bool(
+            dockerfile_defaults
+            and (
+                dockerfile_defaults.get("base")
+                or dockerfile_defaults.get("workdir")
+                or dockerfile_defaults.get("cmd")
+            )
+        )
 
         marker = " [dockerfile]" if has_dockerfile else ""
 
-        if description:
-            print(f"  {name:<10} → {description}{marker}")
-        else:
-            print(f"  {name}{marker}")
-    
+        print(
+            f"  {name:<14} {purpose:<14} → ({concepts}){marker}"
+        )
+
     print()
