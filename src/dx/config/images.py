@@ -1,31 +1,36 @@
 IMAGE_PROFILES = {
     "nginx": {
+        "purpose": "web server",
+        "concepts": ["ports"],
         "container_port": 80,
         "default_host_port": 8080,
         "prompts": ["port", "container_port"],
-        "description": "web server (ports)",
         "dockerfile": {
             "base": "nginx:latest",
             "workdir": None,
             "cmd": None,
         },
     },
+
     "redis": {
+        "purpose": "cache",
+        "concepts": ["ports"],
         "container_port": 6379,
         "default_host_port": 6379,
         "prompts": ["port", "container_port"],
-        "description": "cache (ports)",
         "dockerfile": {
             "base": "redis:latest",
             "workdir": None,
             "cmd": None,
         },
     },
+
     "postgres": {
+        "purpose": "database",
+        "concepts": ["ports", "env"],
         "container_port": 5432,
         "default_host_port": 5432,
         "prompts": ["port", "container_port", "env"],
-        "description": "database (ports + env)",
         "env": {
             "POSTGRES_PASSWORD": "password",
         },
@@ -35,11 +40,13 @@ IMAGE_PROFILES = {
             "cmd": None,
         },
     },
+
     "mysql": {
+        "purpose": "database",
+        "concepts": ["ports", "env"],
         "container_port": 3306,
         "default_host_port": 3306,
         "prompts": ["port", "container_port", "env"],
-        "description": "database (ports + env)",
         "env": {
             "MYSQL_ROOT_PASSWORD": "password",
         },
@@ -49,18 +56,22 @@ IMAGE_PROFILES = {
             "cmd": None,
         },
     },
+
     "node": {
+        "purpose": "development",
+        "concepts": ["volume"],
         "prompts": ["volume"],
-        "description": "development (volume)",
         "dockerfile": {
             "base": "node:18",
             "workdir": "/app",
             "cmd": "npm start",
         },
     },
+
     "python": {
+        "purpose": "development",
+        "concepts": ["volume", "command"],
         "prompts": ["volume", "command"],
-        "description": "development (volume + command)",
         "dockerfile": {
             "base": "python:3.11",
             "workdir": "/app",
