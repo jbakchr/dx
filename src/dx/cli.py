@@ -35,15 +35,15 @@ Tip:
 
 
 @app.command()
-def run(image: str):
-    """Run a container (interactive learning)"""
-    run_command(image=image)
-
-
-@app.command()
 def supported():
     """Show images supported by dx"""
     supported_command()
+
+
+@app.command()
+def run(image: str):
+    """Run a container (interactive learning)"""
+    run_command(image=image)
 
 
 @app.command()
