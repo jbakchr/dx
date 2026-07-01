@@ -8,16 +8,61 @@ from dx.commands.run.exec import execute
 from dx.config.images import IMAGE_PROFILES
 
 
-def get_image_name(image: str):
+def get_image_name(image: str) -> str:
+    """
+    Extract the base image name from an image reference.
+
+    Args:
+        image: Docker image name, optionally including a tag.
+
+    Returns:
+        The image name without its tag.
+    """
     return image.split(":")[0]
 
 
-def get_profile(image_name: str):
+def get_profile(image_name: str) -> dict:
+    """
+    Retrieve the image profile for a supported image.
+
+    Args:
+        image_name: Name of the Docker image.
+
+    Returns:
+        The matching image profile, or an empty dictionary if
+        the image is not supported.
+    """
     return IMAGE_PROFILES.get(image_name, {})
 
 
+def build_command(
+    image: str,
+    detached: bool,
+    host_port: str | None,
+    container_port: str | None,
+    name: str | None,
+    env_vars: dict,
+    volume: str | None,
+    workdir: str | None,
+    command: str | None,
+) -> str:
+    """
+    Build a docker run command from user inputs.
 
-def build_command(image, detached, host_port, container_port, name, env_vars, volume, workdir, command):
+    Args:
+        image: Docker image to run.
+        detached: Whether to run the container in the background.
+        host_port: Host port to expose.
+        container_port: Container port to expose.
+        name: Container name.
+        env_vars: Environment variables to inject.
+        volume: Volume mapping specification.
+        workdir: Working directory inside the container.
+        command: Command to execute inside the container.
+
+    Returns:
+        A complete docker run command.
+    """
     parts = ["docker", "run"]
 
     if detached:
@@ -28,7 +73,7 @@ def build_command(image, detached, host_port, container_port, name, env_vars, vo
 
     for key, value in env_vars.items():
         parts.extend(["-e", f"{key}={value}"])
-    
+
     if volume:
         parts.extend(["-v", volume])
 
@@ -46,11 +91,23 @@ def build_command(image, detached, host_port, container_port, name, env_vars, vo
     return " ".join(parts)
 
 
-def run(image: str):
-    """Interactive run command"""
+def run(image: str) -> None:
+    """
+    Run a container through the interactive dx workflow.
 
+    Guides the user through image-specific prompts,
+    builds the corresponding docker run command,
+    explains the selected options, and optionally
+    executes the command.
+
+    Args:
+        image: Docker image to run.
+
+    Returns:
+        None.
+    """
     # ---- input ----
-    
+
     image_name = get_image_name(image)
     profile = get_profile(image_name)
 
@@ -59,11 +116,12 @@ def run(image: str):
         print("💡 Tip: run `dx supported` to see available images\n")
         return
 
-
     # ---- header ----
+
     show_run_header()
 
     # ---- prompts ----
+
     host_port, container_port, detached = collect_common_inputs(profile)
 
     env_vars, volume, workdir, command = collect_image_inputs(profile)
@@ -71,6 +129,7 @@ def run(image: str):
     name = ask_name()
 
     # ---- build ----
+
     cmd = build_command(
         image=image,
         detached=detached,
@@ -80,16 +139,18 @@ def run(image: str):
         env_vars=env_vars,
         volume=volume,
         workdir=workdir,
-        command=command
+        command=command,
     )
 
     # ---- output ----
+
     separator()
     show_command(cmd)
     explain(detached, host_port, container_port, name, env_vars, volume)
     separator()
 
     # ---- confirm ----
+
     if not confirm_run():
         print("\nAborted ❌")
         return
@@ -97,4 +158,5 @@ def run(image: str):
     separator()
 
     # ---- execute ----
+
     execute(cmd)
