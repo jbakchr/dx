@@ -1,8 +1,22 @@
+from typing import Any
+
 from dx.config.images import IMAGE_PROFILES
 from dx.ui.output import separator
 
 
-def supports_dockerfile(profile) -> bool:
+def supports_dockerfile(profile: dict[str, Any]) -> bool:
+    """
+    Determine whether an image profile supports dx dockerfile.
+
+    Dockerfile support exists when at least one Dockerfile-related
+    setting is defined in the image profile.
+
+    Args:
+        profile: An image profile from IMAGE_PROFILES.
+
+    Returns:
+        True if Dockerfile generation is supported, otherwise False.
+    """
     dockerfile = profile.get("dockerfile")
 
     return bool(
@@ -15,7 +29,17 @@ def supports_dockerfile(profile) -> bool:
     )
 
 
-def supported():
+
+def supported() -> None:
+    """
+    Display the images supported by dx.
+
+    Lists each supported image together with its purpose,
+    Docker concepts, and Dockerfile support indicator.
+
+    Returns:
+        None.
+    """
     separator()
     print("Supported images")
     separator()
