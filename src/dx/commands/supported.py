@@ -1,7 +1,7 @@
 from typing import Any
 
+from dx.ui.output import separator, show_header
 from dx.config.images import IMAGE_PROFILES
-from dx.ui.output import separator
 
 
 def supports_dockerfile(profile: dict[str, Any]) -> bool:
@@ -40,9 +40,7 @@ def supported() -> None:
     Returns:
         None.
     """
-    separator()
-    print("Supported images")
-    separator()
+    show_header("Supported images")
 
     for name, profile in IMAGE_PROFILES.items():
         purpose = profile.get("purpose", "")

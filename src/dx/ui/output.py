@@ -7,6 +7,12 @@ def show_run_header() -> None:
     separator()
 
 
+def show_header(title: str) -> None:
+    separator()
+    print(f"{title}")
+    separator()
+
+
 def separator():
     print("\n" + "-" * 60 + "\n")
 
