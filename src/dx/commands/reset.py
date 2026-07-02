@@ -28,6 +28,8 @@ def reset() -> None:
     print(rm_cmd)
     print("→ remove all containers\n")
 
+    
+
     confirm = input("Run? (Y/n) ").strip().lower()
 
     if confirm == "n":

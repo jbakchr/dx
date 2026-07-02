@@ -152,7 +152,8 @@ def run(image: str) -> None:
     # ---- confirm ----
 
     if not confirm_run():
-        print("\nAborted ❌")
+        separator()
+        print("Aborted ❌\n")
         return
 
     separator()
