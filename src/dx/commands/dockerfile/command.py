@@ -1,4 +1,4 @@
-from dx.ui.output import print_header, print_instruction
+from dx.ui.output import print_header, print_instruction, show_header
 from dx.ui.prompt import input_prompt
 from dx.config.images import IMAGE_PROFILES
 
@@ -18,7 +18,7 @@ def run(image: str | None = None) -> None:
         None.
     """
 
-    print_header("Dockerfile Builder")
+    show_header("🧱 Dockerfile Builder")
 
     # Guard: require image
     if not image:
