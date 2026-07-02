@@ -118,7 +118,6 @@ def run(image: str) -> None:
 
     # ---- header ----
 
-    # show_run_header()
     show_header(f"Build a real Docker run command step by step.")
 
     # ---- prompts ----
