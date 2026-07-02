@@ -35,7 +35,7 @@ def rm(all: bool = False) -> None:
     separator()
 
     if confirm == "n":
-        print("\nAborted ❌\n")
+        print("Aborted ❌\n")
         return
 
     print("Executing Docker command...\n")
