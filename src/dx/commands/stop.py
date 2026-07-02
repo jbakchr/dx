@@ -24,9 +24,6 @@ def stop(all: bool = False) -> None:
         print("\nOnly `--all` is supported for now.\n")
         return
 
-    # print()
-    # print("🛑 Stopping all running containers:\n")
-
     show_header("🛑 Stopping all running containers")
 
     command = "docker stop $(docker ps -q)"
