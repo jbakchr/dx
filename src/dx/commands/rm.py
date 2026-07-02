@@ -2,6 +2,8 @@
 
 import subprocess
 
+from dx.ui.output import separator, show_command, show_header
+
 
 def rm(all: bool = False) -> None:
     """
@@ -22,21 +24,21 @@ def rm(all: bool = False) -> None:
         print("\nOnly `--all` is supported for now.\n")
         return
 
-    print()
-    print("🧹 Removing all containers:\n")
+    show_header("🧹 Removing all containers")
 
     command = "docker rm $(docker ps -a -q)"
 
-    print(command)
-    print("→ remove all containers\n")
+    show_command(command)
 
+    separator()
     confirm = input("Run? (Y/n) ").strip().lower()
+    separator()
 
     if confirm == "n":
         print("\nAborted ❌\n")
         return
 
-    print("\nExecuting Docker command...\n")
+    print("Executing Docker command...\n")
     print("--- Docker output ---\n")
 
     subprocess.run(command, shell=True)
