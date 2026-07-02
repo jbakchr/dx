@@ -1,373 +1,572 @@
 # 🐳 dx — Roadmap
 
-Build dx slowly.  
-Each step should be small, useful, and testable.
+Build dx slowly.
+
+Each step should be:
+
+- small
+- useful
+- testable
+
+Every phase should feel like:
+
+```text
+"Ahh... this is already useful."
+```
 
 ---
 
 ## 🧠 Guiding principles
 
-- Keep things minimal
-- Build only what is needed right now
-- Prefer working software over ideas
+### Keep things minimal
 
-Each phase should feel like:
+Build only what is needed right now.
 
-→ "Ahh… this is already useful"
+Avoid:
+
+- abstractions
+- configuration systems
+- feature creep
+
+Prefer:
+
+- clear workflows
+- real Docker usage
+- repetition
 
 ---
 
-## ✅ CURRENT STATE (IMPORTANT)
+### Reveal Docker, don't hide it
 
-dx is now a **learning-first Docker system**  
-with a **complete, repeatable workflow**.
+dx exists to teach Docker.
+
+It should never become:
+
+```text
+Docker but easier
+```
+
+Instead:
+
+```text
+Docker but easier to understand
+```
+
+The real command should always remain visible.
+
+---
+
+### Learning over convenience
+
+The goal is not:
+
+- fewer commands
+- maximum automation
+- productivity optimization
+
+The goal is:
+
+- understanding
+- confidence
+- pattern recognition
+
+---
+
+## ✅ CURRENT STATE
+
+dx is now a **learning-first Docker system** with a complete build → run → reset workflow.
 
 ---
 
 ### ✅ Core capabilities
 
-- ✅ Installable CLI (`pip install -e .`)
-- ✅ dx run
-- ✅ dx dockerfile
-- ✅ dx stop --all
-- ✅ dx rm --all
-- ✅ dx reset
+#### Runtime
 
-- ✅ Interactive prompts
-- ✅ Real Docker execution
-- ✅ Command generation + explanation (with “why”)
-- ✅ Image-aware behavior via `IMAGE_PROFILES`
-- ✅ Guardrails for unsupported images
-- ✅ Discoverability via `dx supported`
+- ✅ `dx run`
+- ✅ guided prompts
+- ✅ image-aware behavior
+- ✅ real Docker execution
+- ✅ command explanations
+
+##### Dockerfiles
+
+- ✅ `dx dockerfile`
+- ✅ image-aware defaults
+- ✅ FROM
+- ✅ WORKDIR
+- ✅ COPY
+- ✅ CMD
+
+##### Container lifecycle
+
+- ✅ `dx stop --all`
+- ✅ `dx rm --all`
+- ✅ `dx reset`
+
+##### Discovery
+
+- ✅ `dx supported`
+- ✅ image descriptions
+- ✅ concept visibility
+- ✅ Dockerfile support indicators
 
 ---
 
 ## ✅ Learning model
 
-dx teaches Docker across **two connected layers**:
+dx teaches Docker through connected learning loops.
 
 ---
 
-### 🔹 Build (Dockerfile)
+#### 🔹 Build loop
 
-- ✅ FROM → base image
-- ✅ WORKDIR → working directory
-- ✅ COPY → add files
-- ✅ CMD → default command
-- ✅ Image-aware defaults
+```text
+dx dockerfile
+→ understand image construction
+```
 
-👉 Guided construction through repetition
+Concepts:
+
+- FROM
+- WORKDIR
+- COPY
+- CMD
+
+Goal:
+
+```text
+Understand how images are built.
+```
 
 ---
 
-### 🔹 Run (Container lifecycle)
+#### 🔹 Run loop
 
-- ✅ docker run
-- ✅ -d → background
-- ✅ -p → ports
-- ✅ -e → environment variables
-- ✅ -v → volumes
-- ✅ -w → working directory
-- ✅ command execution (python)
+```text
+dx run
+→ understand container execution
+```
 
-👉 Full command is always visible
+Concepts:
+
+- ports
+- detached mode
+- environment variables
+- volumes
+- working directories
+- commands
+
+Goal:
+
+```text
+Understand how containers run.
+```
 
 ---
 
-### 🔹 Reset loop (core mechanic)
+#### 🔹 Reset loop
 
+```text
+dx run
+→ experiment
+
+dx reset
+→ clean environment
+
+repeat
 ```
 
-dx run → experiment → dx reset → repeat
+Goal:
 
+```text
+Encourage repetition.
 ```
-
-👉 This is the **core learning loop**
 
 ---
 
-### 🔹 Extended loop
+#### 🔹 Complete workflow
 
+```text
+dx dockerfile
+→ build understanding
+
+dx run
+→ runtime understanding
+
+dx reset
+→ clean slate
+
+repeat
 ```
 
-dx dockerfile → understand build
-→ dx run → experiment
-→ dx reset → repeat
+Goal:
 
+```text
+Build and run become connected ideas.
 ```
-
-👉 Covers **build + run lifecycle**
 
 ---
 
-## ✅ UX (current experience)
+## ✅ Learning concepts
 
-dx now provides a **tight, structured flow**:
+Current learning paths:
 
-- ✅ Minimal header (single line)
-- ✅ Consistent prompt structure:
+| Image | Purpose | Concepts |
+|---------|---------|---------|
+| nginx | web server | ports |
+| redis | cache | ports |
+| postgres | database | ports, environment variables |
+| mysql | database | ports, environment variables |
+| node | development | volumes |
+| python | development | volumes, commands |
 
-```
+Each image teaches only a few Docker concepts.
 
-GLOBAL → IMAGE → NAME
+This keeps learning focused.
 
-```
+---
 
-- ✅ Clear focus on real syntax:
+## ✅ UX
 
-```
+Current UX goals:
 
+- ✅ minimal headers
+- ✅ predictable prompts
+- ✅ real Docker syntax
+- ✅ concise explanations
+- ✅ visible command output
+- ✅ low friction
+
+Example:
+
+```text
 👉 docker run ...
-👉 FROM python:3.11
-
 ```
 
-- ✅ Layered explanations (short + why)
-- ✅ Only relevant flags shown
-- ✅ Real Docker output always visible
-- ✅ Clean execution feedback
+Not:
 
-👉 UX is part of the learning system
+```text
+Magic hidden abstraction
+```
 
 ---
 
-## ✅ Prompt model (important)
+## ✅ Prompt model
 
-All flows follow:
+All runtime flows follow the same structure:
 
-```
+```text
+[GLOBAL]
 
-\[GLOBAL]
 → ports (-p)
 → detached (-d)
 
-\[IMAGE]
+[IMAGE]
+
 → env (-e)
 → volume (-v)
 → working directory (-w)
 → command
 
-\[METADATA]
-→ name (--name)
+[METADATA]
 
+→ name (--name)
 ```
 
-👉 Same structure across all images  
-👉 Builds pattern recognition through repetition
+Benefits:
+
+- repetition
+- pattern recognition
+- consistency
 
 ---
 
 ## ✅ Core system
 
-The central concept in dx:
+The heart of dx:
 
+```python
+IMAGE_PROFILES
 ```
 
-IMAGE\_PROFILES
+Current responsibilities:
 
-```
-
-Used for:
-
-- prompting ✅
-- defaults ✅
-- runtime behavior ✅
-- Dockerfile behavior ✅
+- prompts
+- defaults
+- supported output
+- explanations
+- runtime behavior
+- Dockerfile behavior
 
 Example:
 
+```python
+{
+    "purpose": "database",
+    "concepts": ["ports", "env"]
+}
 ```
 
-nginx    → ports
-python   → volume + command + working directory
-postgres → ports + env
-
-```
-
-👉 One system → multiple learning paths
+One configuration drives multiple learning paths.
 
 ---
 
 ## 🧠 Key insight
 
-dx has evolved from:
+dx started as:
 
-```
-
+```text
 command generator
-
 ```
 
-to:
+dx evolved into:
 
-```
-
+```text
 guided Docker learning system
-
 ```
 
-Now covering:
+The project is no longer about generating commands.
 
-```
-
-build → run → stop → remove → reset → repeat
-
-```
-
-👉 A complete learning workflow
+The project is about helping users internalize Docker.
 
 ---
 
 ## 🎯 CURRENT FOCUS
 
-dx is in:
+dx is firmly in:
 
-👉 **polish + friction reduction phase**
+```text
+POLISH MODE
+```
 
-NOT a feature-building phase.
+Not:
+
+```text
+FEATURE MODE
+```
 
 ---
 
-## ⚡ Friction reduction (highest priority)
+## ⚡ Priority 1 — Friction reduction
 
 Goal:
 
-→ Make repeated usage feel effortless
+```text
+Make repeated usage feel effortless.
+```
 
 Focus:
 
-- Reduce prompt friction
-- Improve defaults (`IMAGE_PROFILES`)
-- Remove unnecessary prompts
-- Keep flow fast and obvious
+- improve defaults
+- remove unnecessary prompts
+- reduce repetition
+- tighten wording
 
 Rule:
 
-If something:
+If something slows learning down:
 
-- slows usage
-- feels repetitive
-- breaks flow
-
-→ simplify it
+```text
+simplify it
+```
 
 ---
 
-## ⚡ Prompt UX tightening
+## ⚡ Priority 2 — Learning clarity
 
 Goal:
 
-→ Make prompts feel natural and predictable
-
-Current state:
-
-- ✅ Consistent ordering
-- ✅ Clear dependencies (`-v → -w`)
-- ✅ Minimal branching
-
-Next:
-
-- Improve wording clarity
-- Improve defaults
-- Remove low-value prompts
-
----
-
-## ⚡ Micro learning improvements
-
-Goal:
-
-→ Improve understanding without adding complexity
+```text
+Improve understanding without adding complexity.
+```
 
 Focus:
 
-- Improve explanation wording
-- Strengthen “why”
-- Show relationships (e.g. `-v ↔ -w`)
+- explanation wording
+- concise "why" statements
+- concept relationships
+
+Examples:
+
+```text
+-v → mount files
+
+-w → run commands where files are mounted
+```
+
+Show relationships.
+
+Avoid lengthy teaching.
+
+---
+
+## ⚡ Priority 3 — IMAGE_PROFILES cleanup
+
+Goal:
+
+```text
+Keep image knowledge centralized.
+```
+
+Current direction:
+
+```python
+{
+    "purpose": "development",
+    "concepts": ["volume", "command"]
+}
+```
+
+Benefits:
+
+- cleaner supported output
+- cleaner explanations
+- cleaner future extensions
 
 Rule:
 
-- keep it short
-- keep it practical
-- no “teaching mode”
+Keep IMAGE_PROFILES as the single source of truth.
 
 ---
 
-## ⚡ Workflow alignment
+## ⚡ Priority 4 — Workflow refinement
 
 Goal:
 
-→ Make dx feel like a natural extension of Docker
+```text
+Make dx feel closer to normal Docker usage.
+```
 
 Focus:
 
-- smarter defaults
-- reduced repetition
-- smoother flow
+- better defaults
+- less typing
+- smoother flows
 
-Success:
+Success looks like:
 
+```text
+I stop thinking about dx.
+
+I start thinking about Docker.
 ```
 
-dx feels like normal Docker usage
+---
 
-```
+## ✅ Recently completed
+
+### Learning improvements
+
+- ✅ Dockerfile workflow
+- ✅ build + run integration
+- ✅ concept-focused image descriptions
+- ✅ improved supported output
+
+### UX improvements
+
+- ✅ consistent prompt ordering
+- ✅ cleaner command displays
+- ✅ image-aware prompts
+- ✅ concept visibility
+
+### Code quality
+
+- ✅ type hints
+- ✅ Google-style docstrings
+- ✅ helper extraction
+- ✅ improved readability
 
 ---
 
 ## ⏳ Later (only if still simple)
 
-Not priorities:
+Potential future ideas:
 
 - dx explain
 - dry-run mode
-- dx learn
-- recipes / presets
-- advanced Docker features
+- image learning recommendations
+- recipe examples
 
-👉 Only revisit if:
+These are not priorities.
 
-- dx stays simple
-- real need appears
+Only revisit them if:
+
+- a real learning problem appears
+- simplicity is preserved
 
 ---
 
 ## ⚠️ Things to avoid
 
-- ❌ Becoming a full Docker abstraction
-- ❌ Mirroring the full Docker CLI
-- ❌ Supporting everything
-- ❌ Complex config systems
-- ❌ Hiding real Docker commands
+Do NOT become:
 
-👉 Simplicity is the product
+- ❌ a Docker replacement
+- ❌ a Docker abstraction layer
+- ❌ a feature-complete wrapper
+- ❌ a productivity framework
+- ❌ a configuration-heavy tool
+
+Do NOT:
+
+- ❌ hide Docker commands
+- ❌ mirror the full Docker CLI
+- ❌ optimize for every use case
 
 ---
 
 ## 🧠 Final rule
 
-If something feels:
+If a feature feels:
 
-- too complex
-- too abstract
 - too big
+- too abstract
+- too clever
+- too configurable
 
-→ skip it
+skip it.
+
+Simplicity is the product.
 
 ---
 
 ## 🏁 Definition of success
 
+```text
+I copy Docker commands
 ```
 
-"I copy Docker commands"
 ↓
-"I recognize patterns"
-↓
-"I understand what I’m doing"
-↓
-"I can write them myself"
-↓
-"I don’t need dx anymore"
 
+```text
+I recognize patterns
+```
+
+↓
+
+```text
+I understand what I'm doing
+```
+
+↓
+
+```text
+I can write them myself
+```
+
+↓
+
+```text
+I don't need dx anymore
+```
+
+The end goal is not:
+
+```text
+Dependency on dx
+```
+
+The end goal is:
+
+```text
+Confidence with Docker
 ```
