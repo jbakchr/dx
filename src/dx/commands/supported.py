@@ -40,7 +40,7 @@ def supported() -> None:
     Returns:
         None.
     """
-    show_header("Supported images")
+    show_header("📚 Supported images")
 
     for name, profile in IMAGE_PROFILES.items():
         purpose = profile.get("purpose", "")
