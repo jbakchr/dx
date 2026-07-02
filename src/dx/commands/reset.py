@@ -2,7 +2,7 @@
 
 import subprocess
 
-from dx.ui.output import show_header
+from dx.ui.output import separator, show_header
 
 
 def reset() -> None:
@@ -22,21 +22,23 @@ def reset() -> None:
     stop_cmd = "docker stop $(docker ps -q)"
     rm_cmd = "docker rm $(docker ps -a -q)"
 
-    print(stop_cmd)
-    print("→ stop all running containers\n")
+    print("Generated Docker commands:\n")
 
-    print(rm_cmd)
-    print("→ remove all containers\n")
+    print(f"👉  {stop_cmd}")
+    print("    → stop all running containers\n")
 
-    
+    print(f"👉  {rm_cmd}")
+    print("    → remove all containers")
 
+    separator()
     confirm = input("Run? (Y/n) ").strip().lower()
+    separator()
 
     if confirm == "n":
-        print("\nAborted ❌\n")
+        print("Aborted ❌\n")
         return
 
-    print("\nExecuting Docker commands...\n")
+    print("Executing: Generated Docker commands...\n")
     print("--- Docker output ---\n")
 
     # Run stop first, then remove
