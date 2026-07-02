@@ -2,6 +2,8 @@
 
 import subprocess
 
+from dx.ui.output import show_header
+
 
 def reset() -> None:
     """
@@ -15,8 +17,7 @@ def reset() -> None:
         None.
     """
 
-    print()
-    print("♻️ Resetting container state:\n")
+    show_header("♻️  Resetting container state")
 
     stop_cmd = "docker stop $(docker ps -q)"
     rm_cmd = "docker rm $(docker ps -a -q)"
