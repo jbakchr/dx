@@ -12,7 +12,7 @@ def separator():
 
 
 def show_command(cmd: str):
-    print("Generated command:\n")
+    print("Generated Docker command:\n")
     print(f"👉  {cmd}")
 
 
@@ -66,12 +66,12 @@ def explain(detached, host_port, container_port, name, env_vars, volume):
 
 
 def execution_header():
-    print("Executing Docker command...\n")
+    print("Executing: Generated Docker command...\n")
     print("--- Docker output ---\n")
 
 
 def execution_done():
-    print("\n✅ Container started — ID shown in Docker output above")
+    print("\n✅ Container started — ID shown in Docker output above\n")
 
 
 def print_header(title: str):
