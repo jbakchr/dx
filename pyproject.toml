@@ -5,7 +5,7 @@ description = "A CLI that helps you learn Docker by using it"
 authors = [{ name = "Jonas" }]
 requires-python = ">=3.10"
 dependencies = [
-    "typer[all]"
+    "typer"
 ]
 
 [project.scripts]
