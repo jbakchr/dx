@@ -2,7 +2,7 @@
 
 import subprocess
 
-from dx.ui.output import show_header
+from dx.ui.output import separator, show_command, show_header
 
 
 def stop(all: bool = False) -> None:
@@ -28,16 +28,18 @@ def stop(all: bool = False) -> None:
 
     command = "docker stop $(docker ps -q)"
 
-    print(command)
-    print("→ stop all running containers\n")
+    show_command(command)
 
+    separator()
     confirm = input("Run? (Y/n) ").strip().lower()
+    separator()
 
     if confirm == "n":
         print("\nAborted ❌\n")
+        separator()
         return
 
-    print("\nExecuting Docker command...\n")
+    print("Executing Docker command...\n")
     print("--- Docker output ---\n")
 
     subprocess.run(command, shell=True)
