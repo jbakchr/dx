@@ -1,6 +1,6 @@
 from typing import Any
 
-from dx.ui.output import separator, show_header
+from dx.ui.output import show_header
 from dx.config.images import IMAGE_PROFILES
 
 

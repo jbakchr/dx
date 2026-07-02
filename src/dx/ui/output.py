@@ -1,10 +1,5 @@
 # src/dx/ui/output.py
 
-def show_run_header() -> None:
-    separator()
-    print("Build a real Docker run command step by step.")
-    separator()
-
 
 def show_header(title: str) -> None:
     separator()

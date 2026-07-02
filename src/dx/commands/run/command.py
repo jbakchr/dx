@@ -1,7 +1,7 @@
 # src/dx/commands/run.py
 
 from dx.ui.prompt import ask_name, confirm_run
-from dx.ui.output import separator, show_command, explain, show_header, show_run_header
+from dx.ui.output import separator, show_command, explain, show_header
 from dx.commands.run.prompts import collect_image_inputs, collect_common_inputs
 from dx.commands.run.exec import execute
 
